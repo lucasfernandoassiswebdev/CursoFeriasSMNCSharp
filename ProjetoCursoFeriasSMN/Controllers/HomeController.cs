@@ -25,7 +25,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
                 return Content(response.ContentAsString);
             }
 
-            return View();
+            return View("Home");
         }
     }
 }
