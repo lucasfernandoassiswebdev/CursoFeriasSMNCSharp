@@ -1,31 +1,32 @@
-﻿<link type="text/css" rel="stylesheet" src="~/Lib/Css/index.css" />
+﻿<link type="text/css" rel="stylesheet" href="~/Lib/Css/Index.css" />
 
-<form action="@Url.Action("Index")" method="post">
+<form action="@Url.Action("Login")" method="post">
     <div class="col s12 m7">
         <div class="card">
             <div class="card-content">
                 <div class="row center">
                     <h1>Login</h1>
                 </div>
-                <div class="row">
-                    <div class="input-field col s6">
+                <div class="row center">
+                    <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
-                        <input id="txtLogin" type="text">
+                        <input id="txtLogin" name="Login" type="text">
                         <label for="txtLogin">Login</label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s6">
+                <div class="row center" >
+                    <div class="input-field col s12">
                         <i class="material-icons prefix">vpn_key</i>
-                        <input id="txtSenha" type="password">
+                        <input id="txtSenha" name="Senha" type="password">
                         <label for="txtSenha">Senha</label>
                     </div>
+                </div>
+                <div class="row center"style="margin-bottom:28px">
+                    <a class="waves-effect waves-light btn" href="#!" type="submit">
+                        <i class="material-icons left">send</i>button
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </form>
-
-<script>
-
-</script>
