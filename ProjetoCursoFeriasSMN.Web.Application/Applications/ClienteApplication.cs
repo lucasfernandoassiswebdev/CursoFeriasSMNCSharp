@@ -8,12 +8,30 @@ namespace ProjetoCursoFeriasSMN.Web.Application.Applications
     {
         private readonly string _enderecoApi = $"{ApiConfig.EnderecoApi}/Cliente";
 
-        public Response<Cliente> VerificaLogin(Cliente cliente)
+        public Response<string> Post(Cliente cliente)
         {
             using (var client = new HttpClient())
             {
-                var response = client.PostAsync($"{_enderecoApi}/login",cliente, new JsonMediaTypeFormatter()).Result;
-                return new Response<Cliente>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
+                var response = client.PostAsync($"{_enderecoApi}/cadastra",cliente, new JsonMediaTypeFormatter()).Result;
+                return new Response<string>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
+            }
+        }
+
+        public Response<string> Put(Cliente cliente)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = client.PutAsync($"{_enderecoApi}/edita", cliente, new JsonMediaTypeFormatter()).Result;
+                return new Response<string>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
+            }
+        }
+
+        public Response<string> Delete(int idCliente)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = client.PutAsync($"{_enderecoApi}/deleta", idCliente, new JsonMediaTypeFormatter()).Result;
+                return new Response<string>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
             }
         }
     }

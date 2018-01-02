@@ -30,5 +30,22 @@ namespace ProjetoCursoFeriasSMN.Repository.DataBase
 
             return Connection;
         }
+
+        //Métodos utilizados nas transações 
+        public void BeginTransaction()
+        {
+            Open();
+            Transaction = Connection.BeginTransaction();
+        }
+
+        public void CommitTransaction()
+        {
+            Transaction.Commit();
+        }
+
+        public void RollBackTransaction()
+        {
+            Transaction.Rollback();
+        }
     }
 }

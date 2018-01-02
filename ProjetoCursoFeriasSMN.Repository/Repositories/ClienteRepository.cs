@@ -1,11 +1,12 @@
 ﻿using ProjetoCursoFeriasSMN.Domain.Entidades;
 using ProjetoCursoFeriasSMN.Repository.DataBase;
+using System.Collections.Generic;
 
 namespace ProjetoCursoFeriasSMN.Repository.Repositories
 {
     public class ClienteRepository : Execucao
     {
-        private static  readonly Conexao Conexao = new Conexao();
+        private static readonly Conexao Conexao = new Conexao();
         public ClienteRepository() : base(Conexao)
         {
         }
@@ -13,37 +14,113 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
         //Enum contendo o nome de nossas procedures
         public enum Procedures
         {
-            VerificaLogin
+            CadastraCliente,
+            EditaCliente,
+            DeletaCliente,
+            ListaClientes
         }
 
-        public Cliente VerificaLogin(Cliente cliente)
+        public string CadastraCliente(Cliente cliente)
         {
-            ExecuteProcedure(Procedures.VerificaLogin);
-            AddParameter("@login",cliente.Login);
-            AddParameter("@senha",cliente.Senha);
+            ExecuteProcedure(Procedures.CadastraCliente);
+            AddParameter("@login", cliente.Nome);
+            AddParameter("@Cpf", cliente.Cpf);
+            AddParameter("@Telefone", cliente.Telefone);
+            AddParameter("@Email", cliente.Email);
+            AddParameter("@Bairro", cliente.Endereco.Bairro);
+            AddParameter("@Cep", cliente.Endereco.Cep);
+            AddParameter("@Cidade", cliente.Endereco.Cidade);
+            AddParameter("@Estado", cliente.Endereco.Estado);
+            AddParameter("@Logradouro", cliente.Endereco.Logradouro);
 
+            var retorno = ExecuteNonQueryWithReturn();
+            var mensagemRetorno = string.Empty;
+
+            switch (retorno)
+            {
+                case 1: mensagemRetorno = "Pau 1"; break;
+                case 2: mensagemRetorno = "Pau 2"; break;
+                case 3: mensagemRetorno = "Pau 3"; break;
+            }
+
+            return mensagemRetorno != string.Empty ? mensagemRetorno : null;
+        }
+
+        public string EditaCliente(Cliente cliente, int idCliente)
+        {
+            ExecuteProcedure(Procedures.CadastraCliente);
+            AddParameter("@login", idCliente);
+            AddParameter("@login", cliente.Nome);
+            AddParameter("@cpf", cliente.Cpf);
+            AddParameter("@telefone", cliente.Telefone);
+            AddParameter("@email", cliente.Email);
+            AddParameter("@bairro", cliente.Endereco.Bairro);
+            AddParameter("@cep", cliente.Endereco.Cep);
+            AddParameter("@cidade", cliente.Endereco.Cidade);
+            AddParameter("@estado", cliente.Endereco.Estado);
+            AddParameter("@logradouro", cliente.Endereco.Logradouro);
+
+            var retorno = ExecuteNonQueryWithReturn();
+            var mensagemRetorno = "";
+
+            switch (retorno)
+            {
+                case 1: mensagemRetorno = "Pau 1"; break;
+                case 2: mensagemRetorno = "Pau 2"; break;
+                case 3: mensagemRetorno = "Pau 3"; break;
+            }
+
+            return mensagemRetorno != string.Empty ? mensagemRetorno : null;
+        }
+
+        public string DeletaCliente(int idCliente)
+        {
+            ExecuteProcedure(Procedures.DeletaCliente);
+            AddParameter("@idCliente", idCliente);
+
+            var retorno = ExecuteNonQueryWithReturn();
+            var mensagemRetorno = "";
+
+            switch (retorno)
+            {
+                case 1: mensagemRetorno = "Pau 1"; break;
+                case 2: mensagemRetorno = "Pau 2"; break;
+                case 3: mensagemRetorno = "Pau 3"; break;
+            }
+
+            return mensagemRetorno != string.Empty ? mensagemRetorno : null;
+        }
+
+        public IEnumerable<Cliente> ListaClientes()
+        {
+            ExecuteProcedure(Procedures.ListaClientes);
+
+            var listaClientes = new List<Cliente>();
             using (var reader = ExecuteReader())
             {
-                //Caso o login esteja correto a proc retornará o cliente deste login
-                if (reader.Read())
-                    return new Cliente
+                while (reader.Read())
+                {
+                    listaClientes.Add(new Cliente
                     {
-                        CodigoCliente = reader.ReadAsInt("CodCliente"),
+                        CodigoCliente = reader.ReadAsInt("CodigoCliente"),
                         Nome = reader.ReadAsString("Nome"),
-                        Telefone = reader.ReadAsString("Telefone"),
-                        Email = reader.ReadAsString("Email"),
+                        Cpf= reader.ReadAsString("Cpf"),
+                        Email= reader.ReadAsString("Email"),
+                        Telefone= reader.ReadAsString("Telefone"),
                         Endereco = new Endereco
                         {
-                            Cep = reader.ReadAsString("Cep"),
-                            Logradouro = reader.ReadAsString("Logradouro"),
-                            Bairro = reader.ReadAsString("Bairro"),
+                            Estado = reader.ReadAsString("Estado"),
                             Cidade = reader.ReadAsString("Cidade"),
-                            Estado = reader.ReadAsString("Estado")
-                        }
-                    };
+                            Cep = reader.ReadAsString("Cep"),
+                            Bairro = reader.ReadAsString("Bairro"),
+                            Logradouro = reader.ReadAsString("Logradouro"),
+                            CodigoEndereco = reader.ReadAsInt("CodigoEndereco")
+                        },
+                    });
+                }
             }
-            //Caso o login esteja incorreto o método retorna null
-            return null;
+
+            return listaClientes;
         }
     }
 }

@@ -77,5 +77,20 @@ namespace ProjetoCursoFeriasSMN.Repository.DataBase
             _conexao.Open();
             return _command.ExecuteReader();
         }
+
+        public void BeginTransaction()
+        {
+            _conexao.BeginTransaction();
+        }
+
+        public void CommitTransaction()
+        {
+            _conexao.CommitTransaction();
+        }
+
+        public void RollBackTransaction()
+        {
+            _conexao.RollBackTransaction();
+        }
     }
 }
