@@ -1,10 +1,9 @@
 ﻿@{ Layout = null;}
 @model IEnumerable<ProjetoCursoFeriasSMN.Models.Produto>
 
-<!--Nesta div será carregada a modal que servirá para editar os clientes-->
 <div id="modalEdicaoProduto"></div>
-
 <div id="modalDeletaProduto"></div>
+<div id="modalCadastraProduto"></div>
 
 <table class="striped">
     <thead>
@@ -29,11 +28,13 @@
                     <td>@produto.Nome</td>
                     <td>@produto.Estoque</td>
                     <td style="display: flex">
-                        <a class="btn-floating waves-effect waves-light red" onclick="EditaProduto(this)">
+                        <a class="btn-floating waves-effect waves-light red" onclick="EditaProduto(this)" data-position="bottom"
+                           data-delay="50" data-tooltip="Editar">
                             <i class="material-icons">mode_edit</i>
                         </a>
-                        <a class="btn-floating waves-effect waves-light red" onclick="DeletaProduto(this)">
-                            <i class="material-icons">shopping_cart</i>
+                        <a class="btn-floating waves-effect waves-light red" onclick="DeletaProduto(this)" ata-position="bottom"
+                           data-delay="50" data-tooltip="Deletar">
+                            <i class="material-icons">delete</i>
                         </a>
                     </td>
                 </tr>
@@ -57,9 +58,9 @@
                 {
                     codigoProduto: codigoProduto
                 })
-            .done(function(data) {
+            .done(function (data) {
                 $("#modalEdicaoProduto").html(data);
-            }).fail(function(xhr) {
+            }).fail(function (xhr) {
                 Materialize.toast(xhr.responseText, 5000);
             });
     }

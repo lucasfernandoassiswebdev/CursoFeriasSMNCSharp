@@ -92,3 +92,15 @@
     </div>
 </div>
 
+<script>
+
+    var opcao = "@Model.Endereco.Estado";
+
+    //Deixando a opção certa selecionada
+    $("#txtEstado option").each(function(option) {
+        if ($(option).text() == opcao)
+            $(this).attr("selected", "selected");
+    });
+
+</script>
+

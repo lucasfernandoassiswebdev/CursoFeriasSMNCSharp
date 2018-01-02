@@ -87,5 +87,20 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
             return View("GridClientes", response.Content);
         }
+
+        public ActionResult DetalharCliente(int codigoCliente)
+        {
+            var appCliente = new ClienteApplication();
+
+            var response = appCliente.GetCliente(codigoCliente);
+            if (response.Status != HttpStatusCode.OK)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.TrySkipIisCustomErrors = true;
+                return Content("Erro ao listar clientes");
+            }
+
+            return View("DetalhaCliente", response.Content);
+        }
     }
 }

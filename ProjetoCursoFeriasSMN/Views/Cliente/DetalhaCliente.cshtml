@@ -1,0 +1,64 @@
+﻿@{ Layout = null;}
+@model ProjetoCursoFeriasSMN.Models.Cliente
+    
+<div id="modalDetalhesCliente" class="modal">
+    <div class="modal-content">
+        <h4 class="bold">Deseja mesmo deletar este cliente?</h4>
+        <div class="row">
+            <form class="col s12" action="@Url.Action("DeletarConfirma")">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtNome">Nome</label>
+                        <input id="txtNome" name="Nome" type="text" value="@Model.Nome" readonly>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtCpf">Cpf</label>
+                        <input id="txtCpf" type="text" value="@Model.Cpf" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtFone">Telefone</label>
+                        <input id="txtFone" type="text" value="@Model.Telefone" readonly>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtEmail">Email</label>
+                        <input id="txtEmail" type="email" class="validate" data-error="e-mail incorreto" data-success="correto" value="@Model.Email"
+                               readonly>
+                    </div>
+                </div>
+                <h5>Endereço</h5>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="txtCep">Cep</label>
+                        <input id="txtCep" type="text" value="@Model.Endereco.Cep" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="txtLogradouro">Logradouro</label>
+                        <input id="txtLogradouro" type="text" value="@Model.Endereco.Logradouro" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtBairro">Bairro</label>
+                        <input id="txtBairro" type="text" value="@Model.Endereco.Bairro" readonly>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtCidade">Cidade</label>
+                        <input id="txtCidade" type="text" value="@Model.Endereco.Cidade" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select id="txtEstado" readonly>
+                            <option value="@Model.Endereco.Estado" selected>@Model.Endereco.Estado</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
