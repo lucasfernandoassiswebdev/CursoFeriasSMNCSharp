@@ -2,9 +2,9 @@
 @model IEnumerable<ProjetoCursoFeriasSMN.Models.Produto>
 
 <!--Nesta div será carregada a modal que servirá para editar os clientes-->
-<div id="modalEdicaoCliente"></div>
+<div id="modalEdicaoProduto"></div>
 
-<div id="modalDeletaCliente"></div>
+<div id="modalDeletaProduto"></div>
 
 <table class="striped">
     <thead>
@@ -58,14 +58,7 @@
                     codigoProduto: codigoProduto
                 })
             .done(function(data) {
-                Materialize.toast(data, 1000);
-                //Regarregando o grid
-                $.get('@Url.Action("","")')
-                    .done(function(data) {
-
-                    }).fail(function(xhr) {
-                        Materialize.toast(xhr.responseText, 1000);
-                    });
+                $("#modalEdicaoProduto").html(data);
             }).fail(function(xhr) {
                 Materialize.toast(xhr.responseText, 5000);
             });
@@ -79,14 +72,7 @@
                     codigoProduto: codigoProduto
                 })
             .done(function (data) {
-                Materialize.toast(data, 1000);
-                //Regarregando o grid
-                $.get('@Url.Action("","")')
-                    .done(function (data) {
-
-                    }).fail(function (xhr) {
-                        Materialize.toast(xhr.responseText, 1000);
-                    });
+                $("#modalDeletaProduto").html(data);
             }).fail(function (xhr) {
                 Materialize.toast(xhr.responseText, 5000);
             });

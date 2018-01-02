@@ -41,6 +41,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
             return Content(response.Content);
         }
 
+        //Este método apenas carrega a tela que deleta o cliente
         public ActionResult Deletar(int codigoCliente)
         {
             var appCliente = new ClienteApplication();
@@ -54,6 +55,22 @@ namespace ProjetoCursoFeriasSMN.Controllers
             }
 
             return View("DeletaCliente", response.Content);
+        }
+
+        //Este método apaga de fato o cliente
+        public ActionResult DeletarConfirma(int codigoCliente)
+        {
+            var appCliente = new ClienteApplication();
+
+            var response = appCliente.Delete(codigoCliente);
+            if (response.Status != HttpStatusCode.OK)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.TrySkipIisCustomErrors = true;
+                return Content(response.Content);
+            }
+
+            return Content(response.Content);
         }
 
         public ActionResult Listar()
