@@ -7,6 +7,21 @@ namespace ProjetoCursoFeriasSMN.Controllers
 {
     public class ProdutoController : Controller
     {
+        public ActionResult Editar(int codigoProduto)
+        {
+            var appProduto = new ProdutoApplication();
+
+            var response = appProduto.GetProduto(codigoProduto);
+            if (response.Status != HttpStatusCode.OK)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.TrySkipIisCustomErrors = true;
+                return Content("Erro ao listar clientes");
+            }
+
+            return View("EditaProduto", response.Content);
+        }
+
         public ActionResult Salvar(Produto produto)
         {
             var appProduto = new ProdutoApplication();
