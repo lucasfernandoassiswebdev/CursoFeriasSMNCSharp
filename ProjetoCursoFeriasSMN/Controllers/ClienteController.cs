@@ -97,7 +97,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 Response.TrySkipIisCustomErrors = true;
-                return Content("Erro ao listar clientes");
+                return Content(response.ContentAsString);
             }
 
             return View("DetalhaCliente", response.Content);

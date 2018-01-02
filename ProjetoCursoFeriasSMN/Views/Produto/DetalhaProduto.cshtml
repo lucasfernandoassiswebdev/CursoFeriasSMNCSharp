@@ -15,19 +15,14 @@
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="txtNomeProduto">Nome</label>
-                        <input id="txtNomeProduto" name="Nome" type="text" disabled value="@Model.Nome">
+                        <input id="txtNomeProduto" name="Nome" type="text" value="@Model.Nome" readonly> 
                     </div>
                     <div class="input-field col s6">
                         <label for="txtEstoque">Cpf</label>
-                        <input type="number" name="estoque" id="txtEstoque" disabled value="@Model.Estoque">
+                        <input type="number" name="estoque" id="txtEstoque" value="@Model.Estoque" readonly>
                     </div>
                 </div>
             </form>
         </div>
-    </div>
-    <div class="modal-footer">
-        <a class="modal-action modal-close waves-effect waves-light btn" href="#!" type="submit">
-            <i class="material-icons left">delete_forever</i>Confirma
-        </a>
     </div>
 </div>

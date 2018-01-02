@@ -50,5 +50,17 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
             var produtoRepository = new ProdutoRepository();
             return Ok(produtoRepository.ListaProdutos());
         }
+
+        [HttpGet, Route("listaProduto")]
+        public IHttpActionResult GetProduto(int codigoProduto)
+        {
+            var produtoRepository = new ProdutoRepository();
+            var response = produtoRepository.ListaProdutos();
+
+            if(response != null)
+                return Ok(response);
+
+            return BadRequest("Nenhum registro encontrado");
+        }
     }
 }

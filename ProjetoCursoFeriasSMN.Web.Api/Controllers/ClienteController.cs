@@ -55,7 +55,12 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         public IHttpActionResult GetCliente(int codigoCliente)
         {
             var clienteRepository = new ClienteRepository();
-            return Ok(clienteRepository.SelecionaCliente(codigoCliente));
+            var response = clienteRepository.SelecionaCliente(codigoCliente);
+
+            if(response != null)
+                return Ok(response);
+
+            return BadRequest("Nenhum registro encontrado");
         }
     }
 }

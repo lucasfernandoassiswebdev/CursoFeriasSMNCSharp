@@ -16,7 +16,8 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             CadastraProduto,
             EditaProduto,
             DeletaProdtuo,
-            ListaProdutos
+            ListaProdutos,
+            SelecionarProduto
         }
 
         public string CadastraProduto(Produto produto)
@@ -58,10 +59,10 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
         }
 
-        public string DeletaProduto(int idProduto)
+        public string DeletaProduto(int codigoProduto)
         {
             ExecuteProcedure(Procedures.DeletaProdtuo);
-            AddParameter("@idProduto", idProduto);
+            AddParameter("@idProduto", codigoProduto);
 
             var retorno = ExecuteNonQueryWithReturn();
             var mensagemRetorno = string.Empty;
@@ -95,6 +96,25 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             }
 
             return listaProdutos;
+        }
+
+        public Produto SelecionaProduto(int codigoProduto)
+        {
+            ExecuteProcedure(Procedures.SelecionarProduto);
+            AddParameter("@codigoProduto",codigoProduto);
+
+            using (var reader = ExecuteReader())
+            {
+                if(reader.Read())
+                    return new Produto
+                    {
+                        Nome = reader.ReadAsString("Nome"),
+                        Estoque = reader.ReadAsInt("Estoque"),
+                        CodigoProduto = reader.ReadAsInt("CodigoProduto")
+                    };
+            }
+
+            return null;
         }
     }
 }

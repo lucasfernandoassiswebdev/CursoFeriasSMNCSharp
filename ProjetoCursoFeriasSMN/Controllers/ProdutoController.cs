@@ -26,6 +26,21 @@ namespace ProjetoCursoFeriasSMN.Controllers
         {
             var appProduto = new ProdutoApplication();
 
+            var response = appProduto.GetProduto(codigoProduto);
+            if (response.Status != HttpStatusCode.OK)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.TrySkipIisCustomErrors = true;
+                return Content(response.ContentAsString);
+            }
+
+            return View("DeletaProduto",response.Content);
+        }
+
+        public ActionResult DeletarConfirmado(int codigoProduto)
+        {
+            var appProduto = new ProdutoApplication();
+
             var response = appProduto.Delete(codigoProduto);
             if (response.Status != HttpStatusCode.OK)
             {
@@ -50,6 +65,21 @@ namespace ProjetoCursoFeriasSMN.Controllers
             }
 
             return View("GridProdutos", response.Content);
+        }
+
+        public ActionResult DetalharProduto(int codigoProduto)
+        {
+            var appProduto = new ProdutoApplication();
+
+            var response = appProduto.GetProduto(codigoProduto);
+            if (response.Status != HttpStatusCode.OK)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.TrySkipIisCustomErrors = true;
+                return Content("Erro ao listar clientes");
+            }
+
+            return View("DetalhaProduto", response.Content);
         }
     }
 }

@@ -44,5 +44,14 @@ namespace ProjetoCursoFeriasSMN.Web.Application.Applications
                 return new Response<IEnumerable<Produto>>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
             }
         }
+
+        public Response<Produto> GetProduto(int codigoProduto)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = client.GetAsync($"{_enderecoApi}/listaProduto").Result;
+                return new Response<Produto>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
+            }
+        }
     }
 }
