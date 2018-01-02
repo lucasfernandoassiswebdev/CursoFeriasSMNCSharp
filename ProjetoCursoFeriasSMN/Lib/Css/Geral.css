@@ -1,3 +1,7 @@
-﻿.btn, .btn-large {
-	background-color: rgb(61,86,97);
+﻿.btn, .btn-large, .btn-floating {
+	background-color: rgb(61,86,97) !important;
+}
+
+.bold {
+	font-weight: bold;
 }

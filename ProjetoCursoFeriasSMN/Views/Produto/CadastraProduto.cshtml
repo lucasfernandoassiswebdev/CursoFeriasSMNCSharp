@@ -1,0 +1,93 @@
+﻿@{ Layout = null;}
+
+<div id="modalCadastroCliente" class="modal">
+    <div class="modal-content">
+        <h4 class="bold">Cadastro de cliente</h4>
+        <div class="row">
+            <form class="col s12" action="@Url.Action("Salvar")">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtNome">Nome</label>
+                        <input id="txtNome" name="Nome" type="text">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtCpf">Cpf</label>
+                        <input id="txtCpf" type="text">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtFone">Telefone</label>
+                        <input id="txtFone" type="text">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtEmail">Email</label>
+                        <input id="txtEmail" type="email" class="validate" data-error="e-mail incorreto" data-success="correto">
+                    </div>
+                </div>
+                <h5>Endereço</h5>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="txtCep">Cep</label>
+                        <input id="txtCep" type="text">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="txtLogradouro">Logradouro</label>
+                        <input id="txtLogradouro" type="text">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtBairro">Bairro</label>
+                        <input id="txtBairro" type="text">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtCidade">Cidade</label>
+                        <input id="txtCidade" type="text">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select id="txtEstado">
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-light btn" href="#!" type="submit">
+            <i class="material-icons left">send</i>Cadastrar
+        </a>
+    </div>
+</div>
+

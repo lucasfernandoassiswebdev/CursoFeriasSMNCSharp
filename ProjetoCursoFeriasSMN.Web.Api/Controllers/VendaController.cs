@@ -33,10 +33,10 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         }
 
         [HttpGet, Route("lista")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int codigoCliente)
         {
             var vendaRepository = new VendaRepository();
-            return Ok(vendaRepository.ListaVendas());
+            return Ok(vendaRepository.ListaVendas(codigoCliente));
         }
     }
 }

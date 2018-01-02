@@ -17,7 +17,8 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             CadastraCliente,
             EditaCliente,
             DeletaCliente,
-            ListaClientes
+            ListaClientes,
+            SelecionaCliente
         }
 
         public string CadastraCliente(Cliente cliente)
@@ -46,10 +47,11 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
         }
 
-        public string EditaCliente(Cliente cliente, int idCliente)
+        public string EditaCliente(Cliente cliente)
         {
             ExecuteProcedure(Procedures.CadastraCliente);
-            AddParameter("@login", idCliente);
+            AddParameter("@codigoCliente", cliente.CodigoCliente);
+            AddParameter("@login", cliente.CodigoEnderecoEspecifico);
             AddParameter("@login", cliente.Nome);
             AddParameter("@cpf", cliente.Cpf);
             AddParameter("@telefone", cliente.Telefone);
@@ -73,10 +75,10 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
         }
 
-        public string DeletaCliente(int idCliente)
+        public string DeletaCliente(int codigoCliente)
         {
             ExecuteProcedure(Procedures.DeletaCliente);
-            AddParameter("@idCliente", idCliente);
+            AddParameter("@idCliente", codigoCliente);
 
             var retorno = ExecuteNonQueryWithReturn();
             var mensagemRetorno = "";
@@ -89,6 +91,36 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             }
 
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
+        }
+
+        public Cliente SelecionaCliente(int codigoCliente)
+        {
+            ExecuteProcedure(Procedures.SelecionaCliente);
+            AddParameter("@codigoCliente", codigoCliente);
+
+            using (var reader = ExecuteReader())
+            {
+                if (reader.Read())
+                    return new Cliente
+                    {
+                        CodigoCliente = reader.ReadAsInt("CodigoCliente"),
+                        Nome = reader.ReadAsString("Nome"),
+                        Cpf = reader.ReadAsString("Cpf"),
+                        Email = reader.ReadAsString("Email"),
+                        Telefone = reader.ReadAsString("Telefone"),
+                        Endereco = new Endereco
+                        {
+                            Estado = reader.ReadAsString("Estado"),
+                            Cidade = reader.ReadAsString("Cidade"),
+                            Cep = reader.ReadAsString("Cep"),
+                            Bairro = reader.ReadAsString("Bairro"),
+                            Logradouro = reader.ReadAsString("Logradouro"),
+                            CodigoEndereco = reader.ReadAsInt("CodigoEndereco")
+                        }
+                    };
+            }
+
+            return null;
         }
 
         public IEnumerable<Cliente> ListaClientes()
@@ -104,9 +136,9 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
                     {
                         CodigoCliente = reader.ReadAsInt("CodigoCliente"),
                         Nome = reader.ReadAsString("Nome"),
-                        Cpf= reader.ReadAsString("Cpf"),
-                        Email= reader.ReadAsString("Email"),
-                        Telefone= reader.ReadAsString("Telefone"),
+                        Cpf = reader.ReadAsString("Cpf"),
+                        Email = reader.ReadAsString("Email"),
+                        Telefone = reader.ReadAsString("Telefone"),
                         Endereco = new Endereco
                         {
                             Estado = reader.ReadAsString("Estado"),
@@ -115,7 +147,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
                             Bairro = reader.ReadAsString("Bairro"),
                             Logradouro = reader.ReadAsString("Logradouro"),
                             CodigoEndereco = reader.ReadAsInt("CodigoEndereco")
-                        },
+                        }
                     });
                 }
             }

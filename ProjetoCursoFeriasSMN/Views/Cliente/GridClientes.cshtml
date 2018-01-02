@@ -1,0 +1,92 @@
+﻿@{ Layout = null;}
+@model IEnumerable<ProjetoCursoFeriasSMN.Models.Cliente>
+
+<!--Nesta div será carregada a modal que servirá para editar os clientes-->
+<div id="modalEdicaoCliente"></div>
+
+<div id="modalDeletaCliente"></div>
+
+<table class="striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>
+                <!--novo-->
+                <a class="btn-floating waves-effect waves-light red tooltipped modal-trigger" style="float: right" data-position="left"
+                   data-delay="50" data-tooltip="Novo" href="#modalCadastroCliente">
+                    <i class="material-icons">person_add</i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var cliente in Model)
+            {
+                <tr data-codigoCliente="@cliente.CodigoCliente">
+                    <td>@cliente.Nome</td>
+                    <td>@cliente.Cpf</td>
+                    <td>@cliente.Telefone</td>
+                    <td>@cliente.Email</td>
+                    <td style="display: flex">
+                        <a class="btn-floating waves-effect waves-light red" onclick="EditaCliente(this)">
+                            <i class="material-icons">mode_edit</i>
+                        </a>
+                        <a class="btn-floating waves-effect waves-light red" onclick="DeletaCliente(this)">
+                            <i class="material-icons">shopping_cart</i>
+                        </a>
+                        <a class="btn-floating waves-effect waves-light red" onclick="ListaVendas(this)">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">Nenhum registro encontrado</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+
+    function EditaCliente(element) {
+        var codigoCliente = $(element).closest("tr").attr("data-codigoCliente");
+
+        $.get('@Url.Action("Editar","Cliente")',
+                {
+                    codigoCliente: codigoCliente
+                })
+            .done(function(data) {
+                $("#modalEdicaoCliente").html(data);
+            }).fail(function(data) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+    function DeletaCliente(element) {
+        var codigoCliente = $(element).closest("tr").attr("data-codigoCliente");
+
+        $.get('@Url.Action("Deletar","Cliente")',
+                {
+                    codigoCliente: codigoCliente
+                })
+            .done(function (data) {
+                $("#modalDeletaCliente").html(data);
+            }).fail(function (data) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+    function ListaVendas(element) {
+
+    }
+
+</script>

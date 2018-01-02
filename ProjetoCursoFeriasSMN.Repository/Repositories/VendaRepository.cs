@@ -99,9 +99,10 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
         }
 
-        public IEnumerable<Venda> ListaVendas()
+        public IEnumerable<Venda> ListaVendas(int codigoCliente)
         {
             ExecuteProcedure(Procedures.ListaVendas);
+            AddParameter("@codigoCliente", codigoCliente);
 
             var listaVendas = new List<Venda>();
             using (var reader = ExecuteReader())

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="ApiConfig.cs" />
     <Compile Include="Applications\ClienteApplication.cs" />
+    <Compile Include="Applications\ProdutoApplication.cs" />
     <Compile Include="Model\Cliente.cs" />
     <Compile Include="Model\Endereco.cs" />
     <Compile Include="Model\EnderecoEspecifico.cs" />

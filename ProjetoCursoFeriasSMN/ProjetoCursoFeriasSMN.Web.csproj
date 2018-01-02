@@ -120,17 +120,20 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Lib\Css\Geral.css" />
-    <Content Include="Lib\Css\Index.css" />
+    <Content Include="Lib\Css\Home.css" />
     <Content Include="Lib\Css\materialize.min.css" />
     <Content Include="Lib\Images\smnicon.png" />
     <Content Include="Lib\Images\smnicon.svg" />
     <Content Include="Lib\Images\smnwallpaper.png" />
+    <Content Include="Lib\Javascript\Inicializacoes.js" />
     <Content Include="Lib\Javascript\materialize.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -158,7 +161,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Cliente\CadastraCliente.cshtml" />
+    <Content Include="Views\Cliente\GridClientes.cshtml" />
+    <Content Include="Views\Home\GridVendas.cshtml" />
+    <Content Include="Views\Cliente\EditaCliente.cshtml" />
+    <Content Include="Views\Cliente\DeletaCliente.cshtml" />
+    <Content Include="Views\Produto\GridProdutos.cshtml" />
+    <Content Include="Views\Produto\CadastraProduto.cshtml" />
+    <Content Include="Views\Produto\DeletaProduto.cshtml" />
+    <Content Include="Views\Produto\EditaProduto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

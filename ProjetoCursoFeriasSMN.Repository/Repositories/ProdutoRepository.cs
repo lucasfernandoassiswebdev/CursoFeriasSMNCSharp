@@ -38,12 +38,12 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
         }
 
-        public string EditaProduto(Produto produto, int idProduto)
+        public string EditaProduto(Produto produto)
         {
             ExecuteProcedure(Procedures.EditaProduto);
             AddParameter("@nome", produto.Nome);
             AddParameter("@estoque", produto.Estoque);
-            AddParameter("@idProduto", idProduto);
+            AddParameter("@idProduto", produto.CodigoProduto);
 
             var retorno = ExecuteNonQueryWithReturn();
             var mensagemRetorno = string.Empty;

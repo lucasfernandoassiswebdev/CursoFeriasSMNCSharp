@@ -21,10 +21,10 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         }
 
         [HttpPut, Route("edita")]
-        public IHttpActionResult Put(Produto produto, int idProduto)
+        public IHttpActionResult Put(Produto produto)
         {
             var produtoRepository = new ProdutoRepository();
-            var response = produtoRepository.EditaProduto(produto, idProduto);
+            var response = produtoRepository.EditaProduto(produto);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);

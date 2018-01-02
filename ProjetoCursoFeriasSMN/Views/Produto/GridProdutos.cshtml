@@ -1,0 +1,95 @@
+﻿@{ Layout = null;}
+@model IEnumerable<ProjetoCursoFeriasSMN.Models.Produto>
+
+<!--Nesta div será carregada a modal que servirá para editar os clientes-->
+<div id="modalEdicaoCliente"></div>
+
+<div id="modalDeletaCliente"></div>
+
+<table class="striped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Estoque</th>
+            <th>
+                <a class="btn-floating waves-effect waves-light red tooltipped modal-trigger" style="float: right" data-position="left"
+                   data-delay="50" data-tooltip="Novo" href="#modalCadastroProduto">
+                    <i class="material-icons">add_circle</i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var produto in Model)
+            {
+                <tr data-codigoProduto="@produto.CodigoProduto">
+                    <td>@produto.Nome</td>
+                    <td>@produto.Estoque</td>
+                    <td style="display: flex">
+                        <a class="btn-floating waves-effect waves-light red" onclick="EditaProduto(this)">
+                            <i class="material-icons">mode_edit</i>
+                        </a>
+                        <a class="btn-floating waves-effect waves-light red" onclick="DeletaProduto(this)">
+                            <i class="material-icons">shopping_cart</i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">Nenhum registro encontrado</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+
+    function EditaProduto(element) {
+        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
+
+        $.get('@Url.Action("Salvar","Produto")',
+                {
+                    codigoProduto: codigoProduto
+                })
+            .done(function(data) {
+                Materialize.toast(data, 1000);
+                //Regarregando o grid
+                $.get('@Url.Action("","")')
+                    .done(function(data) {
+
+                    }).fail(function(xhr) {
+                        Materialize.toast(xhr.responseText, 1000);
+                    });
+            }).fail(function(xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+    function DeletaProduto(element) {
+        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
+
+        $.get('@Url.Action("Deletar","Produto")',
+                {
+                    codigoProduto: codigoProduto
+                })
+            .done(function (data) {
+                Materialize.toast(data, 1000);
+                //Regarregando o grid
+                $.get('@Url.Action("","")')
+                    .done(function (data) {
+
+                    }).fail(function (xhr) {
+                        Materialize.toast(xhr.responseText, 1000);
+                    });
+            }).fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+</script>

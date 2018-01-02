@@ -1,32 +1,57 @@
-﻿<link type="text/css" rel="stylesheet" href="~/Lib/Css/Index.css" />
+﻿<link href="~/Lib/Css/Home.css" rel="stylesheet" type="text/css">
 
-<form action="@Url.Action("Login")" method="post">
-    <div class="col s12 m7">
-        <div class="card">
-            <div class="card-content">
-                <div class="row center">
-                    <h1>Login</h1>
-                </div>
-                <div class="row center">
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">account_circle</i>
-                        <input id="txtLogin" name="Login" type="text">
-                        <label for="txtLogin">Login</label>
-                    </div>
-                </div>
-                <div class="row center" >
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">vpn_key</i>
-                        <input id="txtSenha" name="Senha" type="password">
-                        <label for="txtSenha">Senha</label>
-                    </div>
-                </div>
-                <div class="row center"style="margin-bottom:28px">
-                    <a class="waves-effect waves-light btn" href="#!" type="submit">
-                        <i class="material-icons left">send</i>button
-                    </a>
-                </div>
+<!--modal de cadastro de clientes-->
+@Html.Partial("../Cliente/CadastraCliente")
+
+<!--grid-->
+<div class="container">
+    <div class="row ajuste">
+        <div class="col s12 coluna">
+            <div class="center">
+                <h1 class="bold">Produtos</h1>
             </div>
+            <div id="gridProdutos"></div>
         </div>
     </div>
-</form>
+    <div class="row ajuste">
+        <!--primeira coulna do grid-->
+        <div class="col s8 coluna">
+            <div class="center">
+                <h1 class="bold">Clientes</h1>
+            </div>
+            <!--Aqui será carregada a primeira tabela utilizando Ajax-->
+            <div id="gridClientes" style="display: none"></div>
+        </div>
+        <!--segundacoulna do grid-->
+        <div class="col s5 coluna">
+            <div class="center">
+                <h1 class="bold">Vendas</h1>
+            </div>
+            <!--Aqui será carregada a segunda tabela utilizando Ajax-->
+            <div id="gridVendas" style="display: none"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    
+
+    @*//Trazendo a lista de clientes
+    $.get('@Url.Action("Listar","Cliente")')
+        .done(function(data) {
+            $("#gridClientes").html(data).slideDown("fast");
+        }).
+        fail(function (xhr) {
+            Materialize.toast(xhr.responseText, 5000);
+        });*@
+
+    @*//Trazendo a lista de produtos
+    $.get('@Url.Action("Listar", "Produto")')
+        .done(function(data) {
+            $("#gridClientes").html(data).slideDown("fast");
+        }).
+        fail(function (xhr) {
+            Materialize.toast(xhr.responseText, 5000);
+        });*@
+</script>

@@ -21,10 +21,10 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         }
 
         [HttpPut, Route("edita")]
-        public IHttpActionResult Put(Cliente cliente, int idCliente)
+        public IHttpActionResult Put(Cliente cliente)
         {
             var clienteRepository = new ClienteRepository();
-            var response = clienteRepository.EditaCliente(cliente, idCliente);
+            var response = clienteRepository.EditaCliente(cliente);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -33,10 +33,10 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         }
 
         [HttpDelete, Route("deleta")]
-        public IHttpActionResult Delete(int idCliente)
+        public IHttpActionResult Delete(int codigoCliente)
         {
             var clienteRepository = new ClienteRepository();
-            var response = clienteRepository.DeletaCliente(idCliente);
+            var response = clienteRepository.DeletaCliente(codigoCliente);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -49,6 +49,13 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         {
             var clienteRepository = new ClienteRepository();
             return Ok(clienteRepository.ListaClientes());
+        }
+
+        [HttpGet, Route("selecionaCliente")]
+        public IHttpActionResult GetCliente(int codigoCliente)
+        {
+            var clienteRepository = new ClienteRepository();
+            return Ok(clienteRepository.SelecionaCliente(codigoCliente));
         }
     }
 }
