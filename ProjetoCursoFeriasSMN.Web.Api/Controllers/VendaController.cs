@@ -8,11 +8,12 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
     [RoutePrefix("api/venda")]
     public class VendaController : ApiController
     {
+        private readonly VendaRepository _vendaRepository = new VendaRepository();
+
         [HttpPost, Route("cadastra")]
         public IHttpActionResult Post(Venda venda)
         {
-            var vendaRepository = new VendaRepository();
-            var response = vendaRepository.CadastraVenda(venda);
+            var response = _vendaRepository.CadastraVenda(venda);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -23,8 +24,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         [HttpDelete, Route("deleta")]
         public IHttpActionResult Delete(int idVenda)
         {
-            var vendaRepository = new VendaRepository();
-            var response = vendaRepository.DeletaVenda(idVenda);
+            var response = _vendaRepository.DeletaVenda(idVenda);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -35,8 +35,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         [HttpGet, Route("lista")]
         public IHttpActionResult Get(int codigoCliente)
         {
-            var vendaRepository = new VendaRepository();
-            return Ok(vendaRepository.ListaVendas(codigoCliente));
+            return Ok(_vendaRepository.ListaVendas(codigoCliente));
         }
     }
 }

@@ -8,11 +8,12 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
     [RoutePrefix("api/produto")]
     public class ProdutoController : ApiController
     {
+        private readonly ProdutoRepository _produtoRepository = new ProdutoRepository();
+
         [HttpPost,Route("cadastra")]
         public IHttpActionResult Post(Produto produto)
         {
-            var produtoRepository = new ProdutoRepository();
-            var response = produtoRepository.CadastraProduto(produto);
+            var response = _produtoRepository.CadastraProduto(produto);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -23,8 +24,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         [HttpPut, Route("edita")]
         public IHttpActionResult Put(Produto produto)
         {
-            var produtoRepository = new ProdutoRepository();
-            var response = produtoRepository.EditaProduto(produto);
+           var response = _produtoRepository.EditaProduto(produto);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -35,8 +35,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         [HttpDelete, Route("deleta")]
         public IHttpActionResult Delete(int idProduto)
         {
-            var produtoRepository = new ProdutoRepository();
-            var response = produtoRepository.DeletaProduto(idProduto);
+            var response = _produtoRepository.DeletaProduto(idProduto);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -47,20 +46,13 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         [HttpGet, Route("lista")]
         public IHttpActionResult Get()
         {
-            var produtoRepository = new ProdutoRepository();
-            return Ok(produtoRepository.ListaProdutos());
+            return Ok(_produtoRepository.ListaProdutos());
         }
 
         [HttpGet, Route("listaProduto/{codigoProduto}")]
         public IHttpActionResult GetProduto(int codigoProduto)
         {
-            var produtoRepository = new ProdutoRepository();
-            var response = produtoRepository.ListaProdutos();
-
-            if(response != null)
-                return Ok(response);
-
-            return BadRequest("Nenhum registro encontrado");
+            return Ok(_produtoRepository.ListaProdutos());
         }
     }
 }

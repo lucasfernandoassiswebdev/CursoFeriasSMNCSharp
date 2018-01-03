@@ -8,11 +8,12 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
     [RoutePrefix("api/cliente")]
     public class ClienteController : ApiController
     {
+        private readonly ClienteRepository _clienteRepository = new ClienteRepository();
+
         [HttpPost, Route("cadastra")]
         public IHttpActionResult Post(Cliente cliente)
         {
-            var clienteRepository = new ClienteRepository();
-            var response = clienteRepository.CadastraCliente(cliente);
+            var response = _clienteRepository.CadastraCliente(cliente);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -23,8 +24,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         [HttpPut, Route("edita")]
         public IHttpActionResult Put(Cliente cliente)
         {
-            var clienteRepository = new ClienteRepository();
-            var response = clienteRepository.EditaCliente(cliente);
+            var response = _clienteRepository.EditaCliente(cliente);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -35,8 +35,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         [HttpDelete, Route("deleta")]
         public IHttpActionResult Delete(int codigoCliente)
         {
-            var clienteRepository = new ClienteRepository();
-            var response = clienteRepository.DeletaCliente(codigoCliente);
+            var response = _clienteRepository.DeletaCliente(codigoCliente);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -47,20 +46,13 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         [HttpGet, Route("lista")]
         public IHttpActionResult Get()
         {
-            var clienteRepository = new ClienteRepository();
-            return Ok(clienteRepository.ListaClientes());
+            return Ok(_clienteRepository.ListaClientes());
         }
 
         [HttpGet, Route("selecionaCliente/{codigoCliente}")]
         public IHttpActionResult GetCliente(int codigoCliente)
         {
-            var clienteRepository = new ClienteRepository();
-            var response = clienteRepository.SelecionaCliente(codigoCliente);
-
-            if(response != null)
-                return Ok(response);
-
-            return BadRequest("Nenhum registro encontrado");
+            return Ok(_clienteRepository.SelecionaCliente(codigoCliente));
         }
     }
 }
