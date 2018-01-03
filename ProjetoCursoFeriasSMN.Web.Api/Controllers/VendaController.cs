@@ -21,10 +21,10 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
             return Content(HttpStatusCode.BadRequest, response);
         }
 
-        [HttpDelete, Route("deleta")]
-        public IHttpActionResult Delete(int idVenda)
+        [HttpDelete, Route("deleta/{codigoVenda}")]
+        public IHttpActionResult Delete(int codigoVenda)
         {
-            var response = _vendaRepository.DeletaVenda(idVenda);
+            var response = _vendaRepository.DeletaVenda(codigoVenda);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -32,10 +32,16 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
             return Content(HttpStatusCode.BadRequest, response);
         }
 
-        [HttpGet, Route("lista")]
+        [HttpGet, Route("lista/{codigoCliente}")]
         public IHttpActionResult Get(int codigoCliente)
         {
             return Ok(_vendaRepository.ListaVendas(codigoCliente));
+        }
+
+        [HttpGet, Route("selecionaVenda/{codigoVenda}")]
+        public IHttpActionResult GetVenda(int codigoVenda)
+        {
+            return Ok(_vendaRepository.SelecionaVenda(codigoVenda));
         }
     }
 }

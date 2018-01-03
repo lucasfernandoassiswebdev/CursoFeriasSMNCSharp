@@ -1,75 +1,33 @@
 ﻿@{ Layout = null;}
+@model IEnumerable<ProjetoCursoFeriasSMN.Web.Application.Model.Venda>
 
-<tr>
-    <td>1</td>
-    <td>02/01/2018</td>
-    <td>R$ 20,00</td>
-    <td>R$ 5,00</td>
-    <td>R$ 15,00</td>
-    <td style="display: flex">
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">mode_edit</i>
-        </a>
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">delete</i>
-        </a>
-        <!--detalhes-->
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">info</i>
-        </a>
-    </td>
-</tr>
-<tr>
-    <td>2</td>
-    <td>03/01/2018</td>
-    <td>R$ 10,00</td>
-    <td>R$ 2,00</td>
-    <td>R$ 8,00</td>
-    <td style="display: flex">
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">mode_edit</i>
-        </a>
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">delete</i>
-        </a>
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">info</i>
-        </a>
-    </td>
-</tr>
-<tr>
-    <td>3</td>
-    <td>04/01/2018</td>
-    <td>R$ 150,00</td>
-    <td>R$ 0,00</td>
-    <td>R$ 0,00</td>
-    <td style="display: flex">
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">mode_edit</i>
-        </a>
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">delete</i>
-        </a>
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">info</i>
-        </a>
-    </td>
-</tr>
-<tr>
-    <td>4</td>
-    <td>05/01/2018</td>
-    <td>R$ 230,00</td>
-    <td>R$ 32,00</td>
-    <td>R$ 198,00</td>
-    <td style="display: flex">
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">mode_edit</i>
-        </a>
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">delete</i>
-        </a>
-        <a class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">info</i>
-        </a>
-    </td>
-</tr>
+@if (Model != null && Model.Any())
+{
+    foreach (var venda in Model)
+    {
+        <tr>
+            <td>@venda.CodigoVenda</td>
+            <td>@venda.DataVenda</td>
+            <td>@venda.SubTotal</td>
+            <td>@venda.Desconto</td>
+            <td>@venda.Total</td>
+            <td style="display: flex">
+                <a class="btn-floating waves-effect waves-light red" data-position="left" data-delay="50"
+                   data-tooltip="Deletar">
+                    <i class="material-icons">delete</i>
+                </a>
+                <!--detalhes-->
+                <a class="btn-floating waves-effect waves-light red" data-position="left" data-delay="50"
+                   data-tooltip="Detalhes">
+                    <i class="material-icons">info</i>
+                </a>
+            </td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="5">Nenhum registro encontrado</td>
+    </tr>
+}

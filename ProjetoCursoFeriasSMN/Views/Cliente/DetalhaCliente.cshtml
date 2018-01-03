@@ -1,11 +1,11 @@
 ﻿@{ Layout = null;}
-@model ProjetoCursoFeriasSMN.Models.Cliente
+@model ProjetoCursoFeriasSMN.Web.Application.Model.Cliente
     
 <div id="modalDetalhesCliente" class="modal">
     <div class="modal-content">
-        <h4 class="bold">Deseja mesmo deletar este cliente?</h4>
+        <h4 class="bold">@Model.Nome</h4>
         <div class="row">
-            <form class="col s12" action="@Url.Action("DeletarConfirma")">
+            <form class="col s12">
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="txtNome">Nome</label>

@@ -1,4 +1,4 @@
-﻿namespace ProjetoCursoFeriasSMN.Models
+﻿namespace ProjetoCursoFeriasSMN.Web.Application.Model
 {
     public class EnderecoEspecifico
     {

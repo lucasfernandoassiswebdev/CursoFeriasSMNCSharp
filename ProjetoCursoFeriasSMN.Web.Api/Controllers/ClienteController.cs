@@ -32,7 +32,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
             return Content(HttpStatusCode.BadRequest, response);
         }
 
-        [HttpDelete, Route("deleta")]
+        [HttpDelete, Route("deleta/{codigoCliente}")]
         public IHttpActionResult Delete(int codigoCliente)
         {
             var response = _clienteRepository.DeletaCliente(codigoCliente);

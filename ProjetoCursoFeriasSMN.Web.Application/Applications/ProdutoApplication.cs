@@ -1,4 +1,4 @@
-﻿using ProjetoCursoFeriasSMN.Models;
+﻿using ProjetoCursoFeriasSMN.Web.Application.Model;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -31,7 +31,7 @@ namespace ProjetoCursoFeriasSMN.Web.Application.Applications
         {
             using (var client = new HttpClient())
             {
-                var response = client.PutAsync($"{_enderecoApi}/deleta", codigoProduto, new JsonMediaTypeFormatter()).Result;
+                var response = client.DeleteAsync($"{_enderecoApi}/deleta/{codigoProduto}").Result;
                 return new Response<string>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
             }
         }

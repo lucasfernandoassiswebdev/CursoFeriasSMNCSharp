@@ -7,6 +7,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
     public class ClienteRepository : Execucao
     {
         private static readonly Conexao Conexao = new Conexao();
+
         public ClienteRepository() : base(Conexao)
         {
         }
@@ -99,7 +100,6 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             AddParameter("@codigoCliente", codigoCliente);
 
             using (var reader = ExecuteReader())
-            {
                 if (reader.Read())
                     return new Cliente
                     {
@@ -118,7 +118,6 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
                             CodigoEndereco = reader.ReadAsInt("CodigoEndereco")
                         }
                     };
-            }
 
             return null;
         }
@@ -129,9 +128,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
             var listaClientes = new List<Cliente>();
             using (var reader = ExecuteReader())
-            {
                 while (reader.Read())
-                {
                     listaClientes.Add(new Cliente
                     {
                         CodigoCliente = reader.ReadAsInt("CodigoCliente"),
@@ -149,8 +146,6 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
                             CodigoEndereco = reader.ReadAsInt("CodigoEndereco")
                         }
                     });
-                }
-            }
 
             return listaClientes;
         }

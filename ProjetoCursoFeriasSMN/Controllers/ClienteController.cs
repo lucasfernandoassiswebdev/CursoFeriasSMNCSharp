@@ -1,5 +1,5 @@
-﻿using ProjetoCursoFeriasSMN.Models;
-using ProjetoCursoFeriasSMN.Web.Application.Applications;
+﻿using ProjetoCursoFeriasSMN.Web.Application.Applications;
+using ProjetoCursoFeriasSMN.Web.Application.Model;
 using System.Net;
 using System.Web.Mvc;
 

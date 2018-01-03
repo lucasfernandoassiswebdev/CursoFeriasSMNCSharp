@@ -7,6 +7,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
     public class VendaRepository : Execucao
     {
         private static readonly Conexao Conexao = new Conexao();
+
         public VendaRepository() : base(Conexao)
         {
         }
@@ -16,7 +17,8 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             CadastraVenda,
             CadastraItensVenda,
             DeletaVenda,
-            ListaVendas
+            ListaVendas,
+            ListaVenda
         }
 
         public string CadastraVenda(Venda venda)
@@ -106,13 +108,10 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
             var listaVendas = new List<Venda>();
             using (var reader = ExecuteReader())
-            {
                 while (reader.Read())
-                {
                     listaVendas.Add(new Venda
                     {
                         CodigoCliente = reader.ReadAsInt("CodigoCliente"),
-                        NomeCliente = reader.ReadAsString("NomeCliente"),
                         DataVenda = reader.ReadAsDateTime("DataVenda"),
                         Desconto = reader.ReadAsDecimal("Desconto"),
                         SubTotal = reader.ReadAsDecimal("SubTotal"),
@@ -126,10 +125,36 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
                             CodigoEndereco = reader.ReadAsInt("CodigoEndereco")
                         }
                     });
-                }
-            }
 
             return listaVendas;
+        }
+
+        public Venda SelecionaVenda(int codigoVenda)
+        {
+            ExecuteProcedure(Procedures.ListaVenda);
+            AddParameter("@codigoVenda", codigoVenda);
+
+            using (var reader = ExecuteReader())
+                if (reader.Read())
+                    return new Venda
+                    {
+                        CodigoCliente = reader.ReadAsInt("CodigoCliente"),
+                        DataVenda = reader.ReadAsDateTime("DataVenda"),
+                        Desconto = reader.ReadAsDecimal("Desconto"),
+                        SubTotal = reader.ReadAsDecimal("SubTotal"),
+                        Endereco = new Endereco
+                        {
+                            Estado = reader.ReadAsString("Estado"),
+                            Cidade = reader.ReadAsString("Cidade"),
+                            Cep = reader.ReadAsString("Cep"),
+                            Bairro = reader.ReadAsString("Bairro"),
+                            Logradouro = reader.ReadAsString("Logradouro"),
+                            CodigoEndereco = reader.ReadAsInt("CodigoEndereco")
+                        }
+                    };
+
+
+            return null;
         }
     }
 }

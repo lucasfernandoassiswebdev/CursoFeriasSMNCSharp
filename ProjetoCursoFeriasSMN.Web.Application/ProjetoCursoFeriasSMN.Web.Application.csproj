@@ -55,7 +55,6 @@
     <Compile Include="Model\Cliente.cs" />
     <Compile Include="Model\Endereco.cs" />
     <Compile Include="Model\EnderecoEspecifico.cs" />
-    <Compile Include="Model\Itens.cs" />
     <Compile Include="Model\Produto.cs" />
     <Compile Include="Model\Venda.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

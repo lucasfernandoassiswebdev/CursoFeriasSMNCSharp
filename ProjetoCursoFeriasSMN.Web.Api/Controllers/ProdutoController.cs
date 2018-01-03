@@ -32,10 +32,10 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
             return Content(HttpStatusCode.BadRequest, response);
         }
 
-        [HttpDelete, Route("deleta")]
-        public IHttpActionResult Delete(int idProduto)
+        [HttpDelete, Route("deleta/{codigoProduto}")]
+        public IHttpActionResult Delete(int codigoProduto)
         {
-            var response = _produtoRepository.DeletaProduto(idProduto);
+            var response = _produtoRepository.DeletaProduto(codigoProduto);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);

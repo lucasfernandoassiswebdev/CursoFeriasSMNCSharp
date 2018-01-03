@@ -5,7 +5,6 @@ namespace ProjetoCursoFeriasSMN.Domain.Entidades
 {
     public class Venda
     {
-        public string NomeCliente { get; set; }
         public int CodigoVenda { get; set; }
         public int CodigoCliente { get; set; }
         public int CodigoEnderecoEspecifico { get; set; }

@@ -82,8 +82,7 @@
                     codigoCliente: codigoCliente
                 })
             .done(function (data) {
-                $("#modalDeletarCliente").html(data);
-                $('#modalDeletarCliente').modal("open");
+                $("#gridVendas tbody").html(data).slideDown("fast");
             }).fail(function (xhr) {
                 Materialize.toast(xhr.responseText, 5000);
             });

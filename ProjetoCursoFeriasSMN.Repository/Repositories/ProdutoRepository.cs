@@ -7,6 +7,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
     public class ProdutoRepository : Execucao
     {
         private static readonly Conexao Conexao = new Conexao();
+
         public ProdutoRepository() : base(Conexao)
         {
         }
@@ -18,7 +19,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             DeletaProdtuo,
             ListaProdutos,
             SelecionarProduto
-        }
+        }   
 
         public string CadastraProduto(Produto produto)
         {
@@ -83,17 +84,13 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
             var listaProdutos = new List<Produto>();
             using (var reader = ExecuteReader())
-            {
                 while (reader.Read())
-                {
                     listaProdutos.Add(new Produto
                     {
                        Nome = reader.ReadAsString("Nome"),
                        Estoque = reader.ReadAsInt("Estoque"),
                        CodigoProduto = reader.ReadAsInt("CodigoProduto")
                     });
-                }
-            }
 
             return listaProdutos;
         }
@@ -104,7 +101,6 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             AddParameter("@codigoProduto",codigoProduto);
 
             using (var reader = ExecuteReader())
-            {
                 if(reader.Read())
                     return new Produto
                     {
@@ -112,7 +108,6 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
                         Estoque = reader.ReadAsInt("Estoque"),
                         CodigoProduto = reader.ReadAsInt("CodigoProduto")
                     };
-            }
 
             return null;
         }
