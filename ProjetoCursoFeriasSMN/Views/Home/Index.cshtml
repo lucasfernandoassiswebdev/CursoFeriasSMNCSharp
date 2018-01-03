@@ -14,14 +14,12 @@
         </div>
     </div>
     <div class="row ajuste">
-        <!--primeira coulna do grid-->
         <div class="col s8 coluna">
             <div class="center">
                 <h1 class="bold">Clientes</h1>
             </div>
             @Html.Partial("../Cliente/TableClientes")
-        </div>
-        <!--segundacoulna do grid-->
+        </div>\
         <div class="col s5 coluna">
             <div class="center">
                 <h1 class="bold">Vendas</h1>
@@ -34,7 +32,7 @@
 <script>
 
     //Trazendo a lista de clientes
-    $.get('@Url.Action("Listar","Cliente")')
+    @*$.get('@Url.Action("Listar","Cliente")')
         .done(function (data) {
             $("#gridClientes tbody").html(data).slideDown("fast");
         }).
@@ -49,6 +47,6 @@
         }).
         fail(function (xhr) {
             Materialize.toast(xhr.responseText, 5000);
-        });
+        });*@
 
 </script>
