@@ -1,0 +1,93 @@
+﻿@{ Layout = null;}
+
+<!--Div's onde serão carregadas as modals(formulários)-->-->
+<div id="modalDeletarCliente"></div>
+<div id="modalEditarCliente"></div>
+<div id="modalDetalharCliente"></div>
+@Html.Partial("CadastraCliente")
+
+<table class="striped" id="gridClientes">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>
+                <!--novo-->
+                <a class="btn-floating waves-effect waves-light red tooltipped modal-trigger" style="float: right" data-position="left"
+                   data-delay="50" data-tooltip="Novo" href="#modalCadastroCliente">
+                    <i class="material-icons">person_add</i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody style="display: none">
+    </tbody>
+</table>
+
+<script>
+    
+    function DetalhesCliente(element) {
+        var codigoCliente = $(element).closest("tr").attr("data-codigoCliente");
+
+        //Carregando os dados da modal
+        $.get('@Url.Action("DetalharCliente","Cliente")',
+                {
+                    codigoCliente: codigoCliente
+                })
+            .done(function (data) {
+                $("#modalDetalharCliente").html(data);
+                //Abrindo a modal
+                $('#modalDetalhesCliente').modal("open");
+            }).fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+    function EditaCliente(element) {
+        var codigoCliente = $(element).closest("tr").attr("data-codigoCliente");
+
+        $.get('@Url.Action("Editar","Cliente")',
+                {
+                    codigoCliente: codigoCliente
+                })
+            .done(function(data) {
+                $("#modalEditarCliente").html(data);
+                $('#modalEdicaoCliente').modal("open");
+            }).fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+    function DeletaCliente(element) {
+        var codigoCliente = $(element).closest("tr").attr("data-codigoCliente");
+
+        $.get('@Url.Action("Deletar","Cliente")',
+                {
+                    codigoCliente: codigoCliente
+                })
+            .done(function (data) {
+                $("#modalDeletarCliente").html(data);
+                $('#modalDeletarCliente').modal("open");
+            }).fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+    function ListaVendas(element) {
+        var codigoCliente = $(element).closest("tr").attr("data-codigoCliente");
+
+        $.get('@Url.Action("Listar","Venda")',
+                {
+                    codigoCliente: codigoCliente
+                })
+            .done(function (data) {
+                $("#modalDeletarCliente").html(data);
+                $('#modalDeletarCliente').modal("open");
+            }).fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+</script>

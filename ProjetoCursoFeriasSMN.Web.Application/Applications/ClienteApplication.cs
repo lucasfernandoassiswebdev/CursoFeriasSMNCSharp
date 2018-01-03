@@ -27,11 +27,11 @@ namespace ProjetoCursoFeriasSMN.Web.Application.Applications
             }
         }
 
-        public Response<string> Delete(int idCliente)
+        public Response<string> Delete(int codigoCliente)
         {
             using (var client = new HttpClient())
             {
-                var response = client.PutAsync($"{_enderecoApi}/deleta", idCliente, new JsonMediaTypeFormatter()).Result;
+                var response = client.PutAsync($"{_enderecoApi}/deleta", codigoCliente, new JsonMediaTypeFormatter()).Result;
                 return new Response<string>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
             }
         }
@@ -49,7 +49,7 @@ namespace ProjetoCursoFeriasSMN.Web.Application.Applications
         {
             using (var client = new HttpClient())
             {
-                var response = client.GetAsync($"{_enderecoApi}/selecionaCliente").Result;
+                var response = client.GetAsync($"{_enderecoApi}/selecionaCliente/{codigoCliente}").Result;
                 return new Response<Cliente>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
             }
         }

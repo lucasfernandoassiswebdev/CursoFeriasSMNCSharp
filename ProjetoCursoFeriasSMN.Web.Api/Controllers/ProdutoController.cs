@@ -51,7 +51,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
             return Ok(produtoRepository.ListaProdutos());
         }
 
-        [HttpGet, Route("listaProduto")]
+        [HttpGet, Route("listaProduto/{codigoProduto}")]
         public IHttpActionResult GetProduto(int codigoProduto)
         {
             var produtoRepository = new ProdutoRepository();

@@ -1,106 +1,34 @@
 ﻿@{ Layout = null;}
-@using System.Web.Mvc.Html
 @model IEnumerable<ProjetoCursoFeriasSMN.Models.Produto>
-
-<div id="modalEdicaoProduto"></div>
-<div id="modalDeletaProduto"></div>
-<div id="modalDetalharProduto"></div>
-@Html.Partial("CadastraProduto")
-
-<table class="striped">
-    <thead>
-        <tr>
-            <th>Código</th>
-            <th>Nome</th>
-            <th>Estoque</th>
-            <th>
-                <a class="btn-floating waves-effect waves-light red tooltipped modal-trigger" style="float: right" data-position="left"
-                   data-delay="50" data-tooltip="Novo" href="#modalCadastroProduto" onclick="CadastraProduto(this)">
-                    <i class="material-icons">add_circle</i>
+    
+@if (Model != null && Model.Any())
+{
+    foreach (var produto in Model)
+    {
+        <tr data-codigoProduto="@produto.CodigoProduto">
+            <td>@produto.Nome</td>
+            <td>@produto.Estoque</td>
+            <td style="display: flex">
+                <a class="btn-floating waves-effect waves-light red" onclick="DetalhaProduto(this)" data-position="bottom"
+                   data-delay="50" data-tooltip="Detalhes">
+                    <i class="material-icons">info</i>
                 </a>
-            </th>
+                <a class="btn-floating waves-effect waves-light red" onclick="EditaProduto(this)" data-position="bottom"
+                   data-delay="50" data-tooltip="Editar">
+                    <i class="material-icons">mode_edit</i>
+                </a>
+                <a class="btn-floating waves-effect waves-light red" onclick="DeletaProduto(this)" ata-position="bottom"
+                   data-delay="50" data-tooltip="Deletar">
+                    <i class="material-icons">delete</i>
+                </a>
+            </td>
         </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
-        {
-            foreach (var produto in Model)
-            {
-                <tr data-codigoProduto="@produto.CodigoProduto">
-                    <td>@produto.Nome</td>
-                    <td>@produto.Estoque</td>
-                    <td style="display: flex">
-                        <a class="btn-floating waves-effect waves-light red" onclick="DetalhaProduto(this)" data-position="bottom"
-                           data-delay="50" data-tooltip="Detalhes">
-                            <i class="material-icons">info</i>
-                        </a>
-                        <a class="btn-floating waves-effect waves-light red" onclick="EditaProduto(this)" data-position="bottom"
-                           data-delay="50" data-tooltip="Editar">
-                            <i class="material-icons">mode_edit</i>
-                        </a>
-                        <a class="btn-floating waves-effect waves-light red" onclick="DeletaProduto(this)" ata-position="bottom"
-                           data-delay="50" data-tooltip="Deletar">
-                            <i class="material-icons">delete</i>
-                        </a>
-                    </td>
-                </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="5">Nenhum registro encontrado</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<script>
-
-    function EditaProduto(element) {
-        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
-
-        $.get('@Url.Action("Editar","Produto")',
-                {
-                    codigoProduto: codigoProduto
-                })
-            .done(function (data) {
-                $("#modalEdicaoProduto").html(data);
-                $("#modalEditarProduto").modal("open");
-            }).fail(function (xhr) {
-                Materialize.toast(xhr.responseText, 5000);
-            });
     }
+}
+else
+{
+    <tr>
+        <td colspan="5">Nenhum registro encontrado</td>
+    </tr>
+}
 
-
-    function DetalhaProduto(element) {
-        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
-
-        $.get('@Url.Action("DetalharProduto","Produto")',
-                {
-                    codigoProduto: codigoProduto
-                })
-            .done(function (data) {
-                $("#modalDetalharProduto").html(data);
-                $("#modalDetalhesProduto").modal("open");
-            }).fail(function (xhr) {
-                Materialize.toast(xhr.responseText, 5000);
-            });
-    }
-
-    function DeletaProduto(element) {
-        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
-
-        $.get('@Url.Action("Deletar","Produto")',
-                {
-                    codigoProduto: codigoProduto
-                })
-            .done(function (data) {
-                $("#modalDeletaProduto").html(data);
-                $("#modalDeletarProduto").modal("open");
-            }).fail(function (xhr) {
-                Materialize.toast(xhr.responseText, 5000);
-            });
-    }
-
-</script>

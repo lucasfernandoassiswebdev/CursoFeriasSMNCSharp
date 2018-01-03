@@ -10,7 +10,7 @@
             <div class="center">
                 <h1 class="bold">Produtos</h1>
             </div>
-            <div id="gridProdutos"></div>
+            @Html.Partial("../Produto/TableProdutos")
         </div>
     </div>
     <div class="row ajuste">
@@ -19,39 +19,36 @@
             <div class="center">
                 <h1 class="bold">Clientes</h1>
             </div>
-            <!--Aqui será carregada a primeira tabela utilizando Ajax-->
-            <div id="gridClientes" style="display: none"></div>
+            @Html.Partial("../Cliente/TableClientes")
         </div>
         <!--segundacoulna do grid-->
         <div class="col s5 coluna">
             <div class="center">
                 <h1 class="bold">Vendas</h1>
             </div>
-            <!--Aqui será carregada a segunda tabela utilizando Ajax-->
-            <div id="gridVendas" style="display: none"></div>
+            @Html.Partial("../Venda/TableVendas")
         </div>
     </div>
 </div>
 
 <script>
 
-    
-
-    @*//Trazendo a lista de clientes
+    //Trazendo a lista de clientes
     $.get('@Url.Action("Listar","Cliente")')
-        .done(function(data) {
-            $("#gridClientes").html(data).slideDown("fast");
+        .done(function (data) {
+            $("#gridClientes tbody").html(data).slideDown("fast");
         }).
         fail(function (xhr) {
             Materialize.toast(xhr.responseText, 5000);
-        });*@
+        });
 
-    @*//Trazendo a lista de produtos
+    //Trazendo a lista de produtos
     $.get('@Url.Action("Listar", "Produto")')
-        .done(function(data) {
-            $("#gridClientes").html(data).slideDown("fast");
+        .done(function (data) {
+            $("#gridProdutos tbody").html(data).slideDown("fast");
         }).
         fail(function (xhr) {
             Materialize.toast(xhr.responseText, 5000);
-        });*@
+        });
+
 </script>

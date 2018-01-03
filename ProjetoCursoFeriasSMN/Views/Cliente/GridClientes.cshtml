@@ -1,119 +1,39 @@
 ﻿@{ Layout = null;}
 @model IEnumerable<ProjetoCursoFeriasSMN.Models.Cliente>
 
-<!--Div's onde serão carregadas as modals(formulários)-->-->
-<div id="modalDeletarCliente"></div>
-<div id="modalEditarCliente"></div>
-<div id="modalDetalharCliente"></div>
-@Html.Partial("CadastraCliente")
-
-<table class="striped">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Telefone</th>
-            <th>Email</th>
-            <th>
-                <!--novo-->
-                <a class="btn-floating waves-effect waves-light red tooltipped modal-trigger" style="float: right" data-position="left"
-                   data-delay="50" data-tooltip="Novo" href="#modalCadastroCliente">
-                    <i class="material-icons">person_add</i>
+@if (Model != null && Model.Any())
+{
+    foreach (var cliente in Model)
+    {
+        <tr data-codigoCliente="@cliente.CodigoCliente">
+            <td>@cliente.Nome</td>
+            <td>@cliente.Cpf</td>
+            <td>@cliente.Telefone</td>
+            <td>@cliente.Email</td>
+            <td style="display: flex">
+                <a class="btn-floating waves-effect waves-light red" onclick="DetalhesCliente(this)" data-position="bottom"
+                   data-delay="50" data-tooltip="Detalhes">
+                    <i class="material-icons">info</i>
                 </a>
-            </th>
+                <a class="btn-floating waves-effect waves-light red" onclick="EditaCliente(this)" data-position="bottom"
+                   data-delay="50" data-tooltip="Editar">
+                    <i class="material-icons">mode_edit</i>
+                </a>
+                <a class="btn-floating waves-effect waves-light red" onclick="ListaVendas(this)" data-position="bottom"
+                   data-delay="50" data-tooltip="Vendas deste cliente">
+                    <i class="material-icons">shopping_cart</i>
+                </a>
+                <a class="btn-floating waves-effect waves-light red" onclick="DeletaCliente(this)" data-position="bottom"
+                   data-delay="50" data-tooltip="Deletar">
+                    <i class="material-icons">delete</i>
+                </a>
+            </td>
         </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
-        {
-            foreach (var cliente in Model)
-            {
-                <tr data-codigoCliente="@cliente.CodigoCliente">
-                    <td>@cliente.Nome</td>
-                    <td>@cliente.Cpf</td>
-                    <td>@cliente.Telefone</td>
-                    <td>@cliente.Email</td>
-                    <td style="display: flex">
-                        <a class="btn-floating waves-effect waves-light red" onclick="DetalhesCliente(this)" data-position="bottom"
-                           data-delay="50" data-tooltip="Detalhes">
-                            <i class="material-icons">info</i>
-                        </a>
-                        <a class="btn-floating waves-effect waves-light red" onclick="EditaCliente(this)" data-position="bottom"
-                           data-delay="50" data-tooltip="Editar">
-                            <i class="material-icons">mode_edit</i>
-                        </a>
-                        <a class="btn-floating waves-effect waves-light red" onclick="ListaVendas(this)" data-position="bottom"
-                           data-delay="50" data-tooltip="Vendas deste cliente">
-                            <i class="material-icons">shopping_cart</i>
-                        </a>
-                        <a class="btn-floating waves-effect waves-light red" onclick="DeletaCliente(this)" data-position="bottom"
-                           data-delay="50" data-tooltip="Deletar">
-                            <i class="material-icons">delete</i>
-                        </a>
-                    </td>
-                </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="5">Nenhum registro encontrado</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<script>
-    
-    function DetalhesCliente(element) {
-        var codigoCliente = $(element).closest("tr").attr("data-codigoCliente");
-
-        //Carregando os dados da modal
-        $.get('@Url.Action("DetalharCliente","Cliente")',
-                {
-                    codigoCliente: codigoCliente
-                })
-            .done(function (data) {
-                $("#modalDetalharCliente").html(data);
-                //Abrindo a modal
-                $('#modalDetalhesCliente').modal("open");
-            }).fail(function (xhr) {
-                Materialize.toast(xhr.responseText, 5000);
-            });
     }
-
-    function EditaCliente(element) {
-        var codigoCliente = $(element).closest("tr").attr("data-codigoCliente");
-
-        $.get('@Url.Action("Editar","Cliente")',
-                {
-                    codigoCliente: codigoCliente
-                })
-            .done(function(data) {
-                $("#modalEditarCliente").html(data);
-                $('#modalEdicaoCliente').modal("open");
-            }).fail(function (xhr) {
-                Materialize.toast(xhr.responseText, 5000);
-            });
-    }
-
-    function DeletaCliente(element) {
-        var codigoCliente = $(element).closest("tr").attr("data-codigoCliente");
-
-        $.get('@Url.Action("Deletar","Cliente")',
-                {
-                    codigoCliente: codigoCliente
-                })
-            .done(function (data) {
-                $("#modalDeletarCliente").html(data);
-                $('#modalDeletarCliente').modal("open");
-            }).fail(function (xhr) {
-                Materialize.toast(xhr.responseText, 5000);
-            });
-    }
-
-    function ListaVendas(element) {
-
-    }
-
-</script>
+}
+else
+{
+    <tr>
+        <td colspan="5">Nenhum registro encontrado</td>
+    </tr>
+}

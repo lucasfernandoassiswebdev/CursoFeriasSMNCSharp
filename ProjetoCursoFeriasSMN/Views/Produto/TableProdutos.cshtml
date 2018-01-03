@@ -1,0 +1,76 @@
+﻿@{ Layout = null;}
+@using System.Web.Mvc.Html
+
+
+<div id="modalEdicaoProduto"></div>
+<div id="modalDeletaProduto"></div>
+<div id="modalDetalharProduto"></div>
+@Html.Partial("CadastraProduto")
+
+<table class="striped" id="gridProdutos">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Estoque</th>
+            <th>
+                <a class="btn-floating waves-effect waves-light red tooltipped modal-trigger" style="float: right" data-position="left"
+                   data-delay="50" data-tooltip="Novo" href="#modalCadastroProduto" onclick="CadastraProduto(this)">
+                    <i class="material-icons">add_circle</i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+
+    function EditaProduto(element) {
+        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
+
+        $.get('@Url.Action("Editar","Produto")',
+                {
+                    codigoProduto: codigoProduto
+                })
+            .done(function (data) {
+                $("#modalEdicaoProduto").html(data);
+                $("#modalEditarProduto").modal("open");
+            }).fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+
+    function DetalhaProduto(element) {
+        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
+
+        $.get('@Url.Action("DetalharProduto","Produto")',
+                {
+                    codigoProduto: codigoProduto
+                })
+            .done(function (data) {
+                $("#modalDetalharProduto").html(data);
+                $("#modalDetalhesProduto").modal("open");
+            }).fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+    function DeletaProduto(element) {
+        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
+
+        $.get('@Url.Action("Deletar","Produto")',
+                {
+                    codigoProduto: codigoProduto
+                })
+            .done(function (data) {
+                $("#modalDeletaProduto").html(data);
+                $("#modalDeletarProduto").modal("open");
+            }).fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    }
+
+</script>

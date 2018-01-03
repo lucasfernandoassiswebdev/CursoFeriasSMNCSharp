@@ -51,7 +51,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
             return Ok(clienteRepository.ListaClientes());
         }
 
-        [HttpGet, Route("selecionaCliente")]
+        [HttpGet, Route("selecionaCliente/{codigoCliente}")]
         public IHttpActionResult GetCliente(int codigoCliente)
         {
             var clienteRepository = new ClienteRepository();

@@ -1,0 +1,23 @@
+﻿@{ Layout = null;}
+
+<table class="striped responsive-table" id="gridVendas">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Data</th>
+        <th>Subtotal</th>
+        <th>Desconto</th>
+        <th>Total</th>
+        <th>
+            <!--novo-->
+            <a class="btn-floating waves-effect waves-light red tooltipped" style="float: right" data-position="left" data-delay="50"
+               data-tooltip="Cadastrar venda">
+                <i class="material-icons">add_shopping_cart</i>
+            </a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        @Html.Partial("GridVendas")
+    </tbody>
+</table>

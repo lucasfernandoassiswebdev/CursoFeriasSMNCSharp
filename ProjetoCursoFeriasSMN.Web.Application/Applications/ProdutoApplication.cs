@@ -49,7 +49,7 @@ namespace ProjetoCursoFeriasSMN.Web.Application.Applications
         {
             using (var client = new HttpClient())
             {
-                var response = client.GetAsync($"{_enderecoApi}/listaProduto").Result;
+                var response = client.GetAsync($"{_enderecoApi}/listaProduto/{codigoProduto}").Result;
                 return new Response<Produto>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
             }
         }

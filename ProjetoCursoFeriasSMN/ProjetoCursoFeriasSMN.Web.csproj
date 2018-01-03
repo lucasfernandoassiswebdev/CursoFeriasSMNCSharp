@@ -134,6 +134,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
+    <Compile Include="Controllers\VendaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -162,16 +163,19 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cliente\CadastraCliente.cshtml" />
-    <Content Include="Views\Cliente\GridClientes.cshtml" />
-    <Content Include="Views\Home\GridVendas.cshtml" />
+    <Content Include="Views\Cliente\TableClientes.cshtml" />
+    <Content Include="Views\Venda\TableVendas.cshtml" />
     <Content Include="Views\Cliente\EditaCliente.cshtml" />
     <Content Include="Views\Cliente\DeletaCliente.cshtml" />
-    <Content Include="Views\Produto\GridProdutos.cshtml" />
+    <Content Include="Views\Produto\TableProdutos.cshtml" />
     <Content Include="Views\Produto\CadastraProduto.cshtml" />
     <Content Include="Views\Produto\DeletaProduto.cshtml" />
     <Content Include="Views\Produto\EditaProduto.cshtml" />
     <Content Include="Views\Cliente\DetalhaCliente.cshtml" />
     <Content Include="Views\Produto\DetalhaProduto.cshtml" />
+    <Content Include="Views\Cliente\GridClientes.cshtml" />
+    <Content Include="Views\Produto\GridProdutos.cshtml" />
+    <Content Include="Views\Venda\GridVendas.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
