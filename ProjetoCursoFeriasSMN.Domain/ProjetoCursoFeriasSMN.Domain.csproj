@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\Endereco.cs" />
-    <Compile Include="Entidades\Itens.cs" />
     <Compile Include="Entidades\Produto.cs" />
     <Compile Include="Entidades\Venda.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
