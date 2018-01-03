@@ -181,6 +181,7 @@
     <Content Include="Views\Venda\GridVendas.cshtml" />
     <Content Include="Views\Venda\DeletaVenda.cshtml" />
     <Content Include="Views\Venda\DetalhaVenda.cshtml" />
+    <Content Include="Views\Venda\CadastraVenda.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
