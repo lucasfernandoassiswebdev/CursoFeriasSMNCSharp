@@ -26,7 +26,6 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult Salvar(Cliente cliente)
         {
-
             //Se o objeto cliente que chegou no parâmetro tiver a propriedade CodigoCliente, significa que o cliente deve ser editado,
             //do contrário é um novo cadastro
             var response = cliente.CodigoCliente != 0 ? _appCliente.Put(cliente) : _appCliente.Post(cliente);
