@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace ProjetoCursoFeriasSMN.Controllers
 {
-    public class ClienteController : Controller
+    public class ClienteController : BaseController
     {
         private readonly ClienteApplication _appCliente = new ClienteApplication();
 
@@ -14,12 +14,12 @@ namespace ProjetoCursoFeriasSMN.Controllers
         {
             //Trazendo as informações de um cliente especifico
             var response = _appCliente.GetCliente(codigoCliente);
-            if (response.Status != HttpStatusCode.OK || response.Content == null)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content("Não foi possível encontrar o usuário");
-            }
+            //Verificando se a API conseguiu responder com sucesso
+            if (response.Status != HttpStatusCode.OK)
+                return Error(response.ContentAsString);
+            //Verificando se o cliente não veio nulo
+            if (response.Content == null)
+                return Error("Erro ao listar dados do cliente");
 
             return View("EditaCliente", response.Content);
         }
@@ -31,11 +31,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
             //do contrário é um novo cadastro
             var response = cliente.CodigoCliente != 0 ? _appCliente.Put(cliente) : _appCliente.Post(cliente);
             if (response.Status != HttpStatusCode.OK)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content(response.Content);
-            }
+                return Error(response.ContentAsString);
 
             return Content(response.Content);
         }
@@ -44,12 +40,10 @@ namespace ProjetoCursoFeriasSMN.Controllers
         public ActionResult Deletar(int codigoCliente)
         {
             var response = _appCliente.GetCliente(codigoCliente);
-            if (response.Status != HttpStatusCode.OK || response.Content == null)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content("Não foi possível encontrar o usuário");
-            }
+            if (response.Status != HttpStatusCode.OK)
+                return Error(response.ContentAsString);
+            if (response.Content == null)
+                return Error("Erro ao listar dados do cliente");
 
             return View("DeletaCliente", response.Content);
         }
@@ -59,11 +53,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
         {
             var response = _appCliente.Delete(codigoCliente);
             if (response.Status != HttpStatusCode.OK)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content(response.Content);
-            }
+                return Error(response.ContentAsString);
 
             return Content(response.Content);
         }
@@ -72,12 +62,9 @@ namespace ProjetoCursoFeriasSMN.Controllers
         {
             var response = _appCliente.Get();
             if (response.Status != HttpStatusCode.OK)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content("Erro ao listar clientes");
-            }
+                return Error(response.ContentAsString);
 
+            //Aqui não precisamos verificar se a lista de clientes veio nula, pois a própria view faz essa verificação
             return View("GridClientes", response.Content);
         }
 
@@ -85,11 +72,9 @@ namespace ProjetoCursoFeriasSMN.Controllers
         {
             var response = _appCliente.GetCliente(codigoCliente);
             if (response.Status != HttpStatusCode.OK)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content(response.ContentAsString);
-            }
+                return Error(response.ContentAsString);
+            if (response.Content == null)
+                return Error("Erro ao listar dados do cliente");
 
             return View("DetalhaCliente", response.Content);
         }

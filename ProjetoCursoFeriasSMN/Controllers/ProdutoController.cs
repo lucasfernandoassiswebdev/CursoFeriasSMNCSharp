@@ -5,19 +5,17 @@ using System.Web.Mvc;
 
 namespace ProjetoCursoFeriasSMN.Controllers
 {
-    public class ProdutoController : Controller
+    public class ProdutoController : BaseController
     {
-        private readonly  ProdutoApplication _appProduto = new ProdutoApplication();
+        private readonly ProdutoApplication _appProduto = new ProdutoApplication();
 
         public ActionResult Editar(int codigoProduto)
         {
             var response = _appProduto.GetProduto(codigoProduto);
             if (response.Status != HttpStatusCode.OK)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content("Erro ao listar clientes");
-            }
+                return Error(response.ContentAsString);
+            if (response.Content == null)
+                return Error("Produto não encontrado");
 
             return View("EditaProduto", response.Content);
         }
@@ -26,11 +24,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
         {
             var response = produto.CodigoProduto != 0 ? _appProduto.Put(produto) : _appProduto.Post(produto);
             if (response.Status != HttpStatusCode.OK)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content(response.Content);
-            }
+                return Error(response.ContentAsString);
 
             return Content(response.Content);
         }
@@ -39,23 +33,21 @@ namespace ProjetoCursoFeriasSMN.Controllers
         {
             var response = _appProduto.GetProduto(codigoProduto);
             if (response.Status != HttpStatusCode.OK)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content(response.ContentAsString);
-            }
+                return Error(response.ContentAsString);
+            if (response.Content == null)
+                return Error("Produto não encontrado");
 
-            return View("DeletaProduto",response.Content);
+            return View("DeletaProduto", response.Content);
         }
 
         public ActionResult DeletarConfirmado(int codigoProduto)
         {
-           var response = _appProduto.Delete(codigoProduto);
+            var response = _appProduto.Delete(codigoProduto);
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 Response.TrySkipIisCustomErrors = true;
-                return Content(response.Content);
+                return Content(response.ContentAsString);
             }
 
             return Content(response.Content);
@@ -65,11 +57,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
         {
             var response = _appProduto.Get();
             if (response.Status != HttpStatusCode.OK)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content("Erro ao listar clientes");
-            }
+                return Error(response.ContentAsString);
 
             return View("GridProdutos", response.Content);
         }
@@ -78,11 +66,9 @@ namespace ProjetoCursoFeriasSMN.Controllers
         {
             var response = _appProduto.GetProduto(codigoProduto);
             if (response.Status != HttpStatusCode.OK)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.TrySkipIisCustomErrors = true;
-                return Content("Erro ao listar clientes");
-            }
+                return Error(response.ContentAsString);
+            if (response.Content == null)
+                return Error("Produto não encontrado");
 
             return View("DetalhaProduto", response.Content);
         }
