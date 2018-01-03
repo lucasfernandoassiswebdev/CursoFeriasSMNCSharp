@@ -1,10 +1,10 @@
 ﻿@{ Layout = null;}
 
-<!--Div's onde serão carregadas as modals(formulários)-->-->
+<!--Div's onde serão carregadas as modals(formulários)-->
 <div id="modalDeletarCliente"></div>
 <div id="modalEditarCliente"></div>
 <div id="modalDetalharCliente"></div>
-@Html.Partial("CadastraCliente")
+@Html.Partial("../Cliente/CadastraCliente")
 
 <table class="striped" id="gridClientes">
     <thead>
@@ -22,12 +22,11 @@
             </th>
         </tr>
     </thead>
-    <tbody style="display: none">
-    </tbody>
+    <tbody style="display: none"></tbody>
 </table>
 
 <script>
-    
+
     function DetalhesCliente(element) {
         var codigoCliente = $(element).closest("tr").attr("data-codigoCliente");
 
@@ -52,7 +51,7 @@
                 {
                     codigoCliente: codigoCliente
                 })
-            .done(function(data) {
+            .done(function (data) {
                 $("#modalEditarCliente").html(data);
                 $('#modalEdicaoCliente').modal("open");
             }).fail(function (xhr) {

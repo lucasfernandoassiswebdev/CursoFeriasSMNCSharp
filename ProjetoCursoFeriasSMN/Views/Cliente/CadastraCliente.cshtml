@@ -4,7 +4,12 @@
     <div class="modal-content">
         <h4 class="bold">Cadastro de cliente</h4>
         <div class="row">
-            <form class="col s12" action="@Url.Action("Salvar")">
+            @Ajax.BeginForm("Salvar","Cliente",new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "RecarregaGrid(data)",
+                OnFailure = "Error(xhr)"
+            }){ 
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="txtNome">Nome</label>
@@ -12,45 +17,45 @@
                     </div>
                     <div class="input-field col s6">
                         <label for="txtCpf">Cpf</label>
-                        <input id="txtCpf" type="text">
+                        <input id="txtCpf" name="Cpf" type="text">
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="txtFone">Telefone</label>
-                        <input id="txtFone" type="text">
+                        <input id="txtFone" name="Telefone" type="text">
                     </div>
                     <div class="input-field col s6">
                         <label for="txtEmail">Email</label>
-                        <input id="txtEmail" type="email" class="validate" data-error="e-mail incorreto" data-success="correto"> 
+                        <input id="txtEmail" type="email" class="validate" data-error="e-mail incorreto" data-success="correto" name="Email"> 
                     </div>
                 </div>
                 <h5>Endereço</h5>
                 <div class="row">
                     <div class="input-field col s12">
                         <label for="txtCep">Cep</label>
-                        <input id="txtCep" type="text">
+                        <input id="txtCep" name="Cep" type="text">
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <label for="txtLogradouro">Logradouro</label>
-                        <input id="txtLogradouro" type="text">
+                        <input id="txtLogradouro" name="Logradouro" type="text">
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="txtBairro">Bairro</label>
-                        <input id="txtBairro" type="text">
+                        <input id="txtBairro" name="Bairro" type="text">
                     </div>
                     <div class="input-field col s6">
                         <label for="txtCidade">Cidade</label>
-                        <input id="txtCidade" type="text">
+                        <input id="txtCidade" name="Cidade" type="text">
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <select id="txtEstado">
+                        <select id="txtEstado" name="Estado">
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
                             <option value="AP">Amapá</option>
@@ -81,7 +86,7 @@
                         </select>
                     </div>
                 </div>
-            </form>
+            }
         </div>
     </div>
     <div class="modal-footer">
@@ -91,4 +96,24 @@
     </div>
 </div>
 
+<script>
+    
+    function RecarregaGrid(data) {
+        //Exibindo um feedback de sucesso
+        Materialize.Toast(data, 1000);
 
+        //Fazendo a requisição no método que lista os produtos
+        $.get('@Url.Action("Listar")').success(function (data) {
+            $("#gridClientes tbody").html(data).slideDown("fast");
+        }).error(function (xhr) {
+            Materialize.toast(xhr.responseText, 4000);
+        });
+    }
+
+    function Error(xhr) {
+        Materialize.toast(xhr.responseText, 5000);
+    }
+
+    $('.modal').modal();
+
+</script>

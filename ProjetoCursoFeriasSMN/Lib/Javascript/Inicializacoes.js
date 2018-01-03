@@ -1,3 +1,2 @@
-﻿$('.modal').modal();
-$('select').material_select();
+﻿$('select').material_select();
 $('.tooltipped').tooltip({ delay: 50 });
