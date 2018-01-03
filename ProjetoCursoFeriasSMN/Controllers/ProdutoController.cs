@@ -7,11 +7,11 @@ namespace ProjetoCursoFeriasSMN.Controllers
 {
     public class ProdutoController : Controller
     {
+        private readonly  ProdutoApplication _appProduto = new ProdutoApplication();
+
         public ActionResult Editar(int codigoProduto)
         {
-            var appProduto = new ProdutoApplication();
-
-            var response = appProduto.GetProduto(codigoProduto);
+            var response = _appProduto.GetProduto(codigoProduto);
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -24,9 +24,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult Salvar(Produto produto)
         {
-            var appProduto = new ProdutoApplication();
-
-            var response = produto.CodigoProduto != 0 ? appProduto.Put(produto) : appProduto.Post(produto);
+            var response = produto.CodigoProduto != 0 ? _appProduto.Put(produto) : _appProduto.Post(produto);
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -39,9 +37,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult Deletar(int codigoProduto)
         {
-            var appProduto = new ProdutoApplication();
-
-            var response = appProduto.GetProduto(codigoProduto);
+            var response = _appProduto.GetProduto(codigoProduto);
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -54,9 +50,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult DeletarConfirmado(int codigoProduto)
         {
-            var appProduto = new ProdutoApplication();
-
-            var response = appProduto.Delete(codigoProduto);
+           var response = _appProduto.Delete(codigoProduto);
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -69,9 +63,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult Listar()
         {
-            var appProduto = new ProdutoApplication();
-
-            var response = appProduto.Get();
+            var response = _appProduto.Get();
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -84,9 +76,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult DetalharProduto(int codigoProduto)
         {
-            var appProduto = new ProdutoApplication();
-
-            var response = appProduto.GetProduto(codigoProduto);
+            var response = _appProduto.GetProduto(codigoProduto);
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;

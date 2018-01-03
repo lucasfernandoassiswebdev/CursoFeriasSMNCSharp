@@ -7,13 +7,13 @@ namespace ProjetoCursoFeriasSMN.Controllers
 {
     public class ClienteController : Controller
     {
+        private readonly ClienteApplication _appCliente = new ClienteApplication();
+
         //Este método apenas carrega a tela de edição
         public ActionResult Editar(int codigoCliente)
         {
             //Trazendo as informações de um cliente especifico
-            var appCliente = new ClienteApplication();
-
-            var response = appCliente.GetCliente(codigoCliente);
+            var response = _appCliente.GetCliente(codigoCliente);
             if (response.Status != HttpStatusCode.OK || response.Content == null)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -26,11 +26,10 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult Salvar(Cliente cliente)
         {
-            var appCliente = new ClienteApplication();
 
             //Se o objeto cliente que chegou no parâmetro tiver a propriedade CodigoCliente, significa que o cliente deve ser editado,
             //do contrário é um novo cadastro
-            var response = cliente.CodigoCliente != 0 ? appCliente.Put(cliente) : appCliente.Post(cliente);
+            var response = cliente.CodigoCliente != 0 ? _appCliente.Put(cliente) : _appCliente.Post(cliente);
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -44,9 +43,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
         //Este método apenas carrega a tela que deleta o cliente
         public ActionResult Deletar(int codigoCliente)
         {
-            var appCliente = new ClienteApplication();
-
-            var response = appCliente.GetCliente(codigoCliente);
+            var response = _appCliente.GetCliente(codigoCliente);
             if (response.Status != HttpStatusCode.OK || response.Content == null)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -60,9 +57,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
         //Este método apaga de fato o cliente
         public ActionResult DeletarConfirma(int codigoCliente)
         {
-            var appCliente = new ClienteApplication();
-
-            var response = appCliente.Delete(codigoCliente);
+            var response = _appCliente.Delete(codigoCliente);
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -75,9 +70,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult Listar()
         {
-            var appCliente = new ClienteApplication();
-
-            var response = appCliente.Get();
+            var response = _appCliente.Get();
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -90,9 +83,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult DetalharCliente(int codigoCliente)
         {
-            var appCliente = new ClienteApplication();
-
-            var response = appCliente.GetCliente(codigoCliente);
+            var response = _appCliente.GetCliente(codigoCliente);
             if (response.Status != HttpStatusCode.OK)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
