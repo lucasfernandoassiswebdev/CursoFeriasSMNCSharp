@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <!--ícone da aba-->
+    <link rel="shortcut icon" href="~/Lib/Images/smnicon.png">
+    <!--Fonte de ícones do Google-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Css do materialize-->
+    <link href="~/Lib/Css/materialize.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Lib/Css/Geral.css" rel="stylesheet" type="text/css">
+    <!--Importação do jQuery(deve vir antes dos scripts do Materialize)-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!--Javascript do materialize-->
+    <script src="~/Lib/Javascript/materialize.min.js"></script>
+    <script src="~/Lib/Javascript/Inicializacoes.js"></script>
+    <!--plugin para mascarar campos-->
+    <script src="~/Lib/Javascript/jquery.mask.js"></script>
+</head>
+<body>
+    <!--Helper que renderiza o conteudo das views no corpo da página-->
+    @RenderBody()
+</body>
+</html>

@@ -1,0 +1,172 @@
+﻿@{ Layout = null;}
+@model ProjetoCursoFeriasSMN.Web.Application.Model.Venda
+
+<div id="modalCadastraVenda" class="modal">
+    <div class="modal-content">
+        <form>
+            <!--Adicionando itens na tabela-->
+            <div class="row">
+                <!--Selectlist de clientes-->
+                <div class="input-field col s4">
+                    @Html.DropDownList("listaClientes", Model.Clientes, "Cliente:")
+                </div>
+                <div class="input-field col s4">
+                    <select id="listaProdutos">
+                        <!--selectlist de produtos-->
+                        @foreach (var produto in Model.Itens)
+                        {
+                            <option value="@produto.CodigoProduto" data-Valor="@produto.Preco" data-Estoque="@produto.Estoque">@produto.Nome</option>
+                        }
+                    </select>
+                    <label>Produto:</label>
+                </div>
+                <div class="input-field col s4">
+                    <label for="txtQuantidade">Quantidade:</label>
+                    <input id="txtQuantidade" name="Nome" type="number">
+                </div>
+            </div>
+            <!--Botão que adiciona os itens na tabela-->
+            <a class="waves-effect waves-light btn" style="float:right" id="adicionaItem">
+                <i class="material-icons left">add_shopping_cart</i>Adicionar
+            </a>
+            <!--Tabela de itens da compra-->
+            <div class="row">
+                <h4>Itens comprados</h4>
+                <table id="tableProdutos">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Valor R$</th>
+                            <th>Quantidade</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--opção de entrega-->
+            <div class="row">
+                <div class="input-field col s4">
+                    <input name="IndicadorEntrega" type="radio" id="opcEntrega" value="C" />
+                    <label for="opcEntrega">Endereço do cliente</label>
+
+                    <input name="IndicadorEntrega" type="radio" id="opcCadastra" value="S" />
+                    <label for="opcCadastra">Cadastrar</label>
+
+                    <input name="IndicadorEntrega" type="radio" id="opcRetirado" value="N" />
+                    <label for="opcRetirado">Retirado no local</label>
+                </div>
+            </div>
+            <!--Formulário de cadastro de endereço-->
+            <div id="formCadastraEndereco" style="display: none">
+                @Html.Partial("../Venda/CadastraEndereco")
+            </div>
+            <!--Finalização-->
+            <div class="row">
+                <div class="input-field col s6">
+                    <label for="txtDesconto">Desconto: R$</label>
+                    <input id="txtDesconto" name="Nome" type="text">
+                </div>
+                <div class="input-field col s6">
+                    <label for="txtTotalCompra">Total: R$</label>
+                    <input id="txtTotalCompra" name="Total" type="text" readonly>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-light btn" href="#!" id="finalizaCompra">
+            <i class="material-icons left">send</i>Cadastrar
+        </a>
+    </div>
+</div>
+
+<script>
+
+    $(".modal").modal();
+    $("select").material_select();
+
+    //Mascarando campos monetários
+    $('#txtTotalCompra, #txtDesconto').mask("#.##0,00", { reverse: true });
+
+    //Exibindo e escondendo formulário de cadastro de endereço de cliente
+    $("input[name=IndicadorEntrega]").change(function () {
+        if ($("input[name=IndicadorEntrega]:checked").val() == "S")
+            $("#formCadastraEndereco").slideDown("fast");
+        else
+            $("#formCadastraEndereco").slideUp("fast");
+    });
+
+    //Adicionando o item na tabela
+    $("#adicionaItem").click(function () {
+        //Verificando se a quantidade digitada não é maior que a quantidade em estoque
+        if (parseInt($("#txtQuantidade").val()) > parseInt($("#listaProdutos option:selected").attr("data-Estoque"))) {
+            Materialize.toast("Quantidade digitada maior que a quantidade em estoque", 2000);
+            return;
+        }
+
+        $("#tableProdutos tbody").append($("<tr>",
+            {
+                "data-Id": $("#listaProdutos option:selected").val(),
+                html: [
+                    $("<td>",
+                        {
+                            html: $("#listaProdutos option:selected").text()
+                        }),
+                    $("<td>",
+                        {
+                            html: $("#listaProdutos option:selected").attr("data-Valor")
+                        }),
+                    $("<td>",
+                        {
+                            html: $("#txtQuantidade").val()
+                        })
+                ]
+            }));
+        CalculaTotal();
+    });
+
+    //Finalizando a compra
+    $("#finalizaCompra").click(function () {
+        var listaItens = [];
+
+        //Montando a lista de itens
+        $("#tableProdutos tbody tr").each(function () {
+            var Produto = {
+                CodigoProduto: $(this).attr("data-Id"),
+                QuantidadeVendida: $(this).find("td:eq(2)").text()
+            }
+            listaItens.push(Produto);
+        });
+
+        //Enviando o objeto venda ao controller
+        $.get('@Url.Action("CadastrarConfirma")',
+                {
+                    CodigoCliente: $("#listaClientes").val(),
+                    Desconto: $("#txtDesconto").val(),
+                    Subtotal: $("#txtTotalCompra").val(),
+
+                    Itens: listaItens
+                })
+            .done(function (data) {
+                Materialize.toast(data);
+                $("#modalCadastraVenda").modal("close");
+            })
+            .fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    });
+
+    function CalculaTotal() {
+        var totalCalculado = 0;
+
+        $("#tableProdutos tbody tr").each(function () {
+            var valor = parseFloat($(this).find("td:eq(1)").text().replace(",", "."));
+            var quantidade = parseInt($(this).find("td:eq(2)").text());
+
+            totalCalculado += valor * quantidade;
+        });
+        //Atualizando o total na tela e mascarando
+        $("#txtTotalCompra").val(totalCalculado).mask("#.##0,00", { reverse: true });;
+    }
+
+</script>

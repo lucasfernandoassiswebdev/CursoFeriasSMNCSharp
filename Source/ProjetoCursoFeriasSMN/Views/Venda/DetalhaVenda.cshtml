@@ -1,0 +1,131 @@
+﻿@{ Layout = null;}
+@model ProjetoCursoFeriasSMN.Web.Application.Model.Venda
+
+<div id="modalDetalhesVenda" class="modal">
+    <div class="modal-content">
+        <h4 class="bold">Venda número: @Model.CodigoVenda</h4>
+        <div class="row">
+            <form>
+                <!--Informações básicas da venda-->
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtCodigoVenda">Código da venda:</label>
+                        <input id="txtCodigoVenda" type="text" readonly value="@Model.CodigoVenda">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtDataVenda">Data da venda:</label>
+                        <input type="text" id="txtDataVenda" readonly value="@Model.DataVenda">
+                    </div>
+                </div>
+                <!--Informações da entrega-->
+                <div>
+                    <h3>Endereço de entrega</h3>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="txtLogradouroVenda">Logradouro:</label>
+                            <input type="text" id="txtLogradouroVenda" readonly value="@Model.Endereco.Logradouro">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="txtBairroVenda">Bairro:</label>
+                            <input type="text" id="txtBairroVenda" readonly value="@Model.Endereco.Bairro">
+                        </div>
+                        <div class="input-field col s6">
+                            <label for="txtCidadeVenda">Cidade:</label>
+                            <input type="text" id="txtCidadeVenda" readonly value="@Model.Endereco.Cidade">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="txtCepVenda">Cep:</label>
+                            <input type="text" id="txtCepVenda" readonly value="@Model.Endereco.Cep">
+                        </div>
+                        <div class="input-field col s6">
+                            <label for="txtEstadoVenda">Estado:</label>
+                            <input type="text" id="txtEstadoVenda" readonly value="@Model.Endereco.Estado">
+                        </div>
+                    </div>
+                </div>
+                <!--Informações do cliente-->
+                <div>
+                    <h3>Informações do cliente</h3>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <label for="txtCodigoVenda">Codigo:</label>
+                            <input id="txtCodigoVenda" type="text" readonly value="@Model.Cliente.CodigoCliente">
+                        </div>
+                        <div class="input-field col s4">
+                            <label for="txtCpfCliente">Cpf:</label>
+                            <input id="txtCpfCliente" type="text" readonly value="@Model.Cliente.Cpf">
+                        </div>
+                        <div class="input-field col s4">
+                            <label for="txtEmailCliente">Email:</label>
+                            <input id="txtEmailCliente" type="text" readonly value="@Model.Cliente.Email">
+                        </div>
+                    </div>
+                    <!--Informações de endereço do cliente-->
+                    <div>
+                        <h3>Endereço d</h3>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="txtLogradouroCliente">Logradouro:</label>
+                                <input type="text" id="txtLogradouroCliente" readonly value="@Model.Cliente.Endereco.Logradouro">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="txtBairroCliente">Bairro:</label>
+                                <input type="text" id="txtBairroCliente" readonly value="@Model.Cliente.Endereco.Bairro">
+                            </div>
+                            <div class="input-field col s6">
+                                <label for="txtCidadeCliente">Cidade:</label>
+                                <input type="text" id="txtCidadeCliente" readonly value="@Model.Cliente.Endereco.Cidade">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="txtCepCliente">Cep:</label>
+                                <input type="text" id="txtCepCliente" readonly value="@Model.Cliente.Endereco.Cep">
+                            </div>
+                            <div class="input-field col s6">
+                                <label for="txtEstadoCliente">Estado:</label>
+                                <input type="text" id="txtEstadoCliente" readonly value="@Model.Cliente.Endereco.Estado">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3>Itens</h3>
+                @foreach (var item in @Model.Itens)
+                {
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <label for="txtIdProduto">Código do produto:</label>
+                            <input id="txtIdProduto" type="text" readonly value="@item.CodigoProduto">
+                        </div>
+                        <div class="input-field col s4">
+                            <label for="txtNomeProduto">Nome do produto:</label>
+                            <input id="txtNomeProduto" type="text" readonly value="@item.Nome">
+                        </div>
+                        <div class="input-field col s4">
+                            <label for="txtQuantidadeVendida">Quantidade comprada:</label>
+                            <input id="txtQuantidadeVendida" type="text" readonly value="@item.QuantidadeVendida">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="txtPreco">Valor: R$</label>
+                            <input id="txtPreco" type="text" readonly value="@item.Preco">
+                        </div>
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $('.modal').modal();
+
+</script>

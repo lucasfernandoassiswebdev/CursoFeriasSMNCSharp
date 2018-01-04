@@ -1,0 +1,97 @@
+﻿<h5>Endereço</h5>
+<div class="row">
+    <div class="input-field col s6">
+        <label for="txtCepCadastro">Cep</label>
+        <input id="txtCepCadastro" name="Cep" type="text">
+    </div>
+    <div class="input-field col s6">
+        <label for="txtNumeroCadastro">Numero</label>
+        <input id="txtNumeroCadastro" name="Numero" type="number">
+    </div>
+</div>
+<div class="row">
+    <div class="input-field col s6">
+        <label for="txtBairroCadastro">Bairro</label>
+        <input id="txtBairroCadastro" name="Bairro" type="text">
+    </div>
+    <div class="input-field col s6">
+        <label for="txtLogradouroCadastro">Logradouro</label>
+        <input id="txtLogradouroCadastro" name="Logradouro" type="text">
+    </div>
+</div>
+<div class="row">
+    <div class="input-field col s6">
+        <label for="txtCidadeCadastro">Cidade</label>
+        <input id="txtCidadeCadastro" name="Cidade" type="text" />
+    </div>
+    <div class="input-field col s6">
+        <select id="txtEstadoCadastro" name="Estado">
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+        </select>
+        <label>Estado:</label>
+    </div>
+</div>
+<div class="row">
+    <div class="input-field col s12">
+        <label for="txtComplementoCadastro">Complemento</label>
+        <textarea id="txtComplementoCadastro" name="Complemento" class="materialize-textarea"></textarea>
+    </div>
+</div>
+
+<script>
+    
+    $("#txtCep").blur(function () {
+        if ($(this).val().length > 0) {
+            $.get("https://viacep.com.br/ws/" + $(this).val().replace("-", "") + "/json/")
+                .done(function(data) {
+                    //Preenchendo os inputs com os dados
+                    $("#txtBairroCadastro").val(data.bairro);
+                    $("#txtLogradouroCadastro").val(data.logradouro);
+                    $("#txtCidadeCadastro").val(data.localidade);
+                    $("#txtEstadoCadastro").val(data.uf);
+                    $("select").material_select();
+
+                    $("#txtBairroCadastro, #txtLogradouroCadastro, #txtCidadeCadastro, #txtEstadoCadastro").trigger("focus").attr("readonly", "readonly");
+                    $("#txtEstadoCadastro").attr("disabled", "disabled");
+                })
+                .fail(function() {
+                    Materialize.toast("Cep não encontrado", 5000);
+                    HabilitaCampos();
+                });
+        } else
+            HabilitaCampos();
+
+    });
+
+    function HabilitaCampos() {
+        $("#txtBairroCadastro, #txtLogradouroCadastro, #txtCidadeCadastro, #txtEstadoCadastro").trigger("focus").attr("readonly", "readonly");
+        $("#txtEstadoCadastro").removeAttr("disabled");
+    }
+
+</script>

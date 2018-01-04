@@ -1,0 +1,37 @@
+﻿@{ Layout = null;}
+@model IEnumerable<ProjetoCursoFeriasSMN.Web.Application.Model.Venda>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var venda in Model)
+    {
+        <tr>
+            <td>@venda.CodigoVenda</td>
+            <td>@venda.DataVenda</td>
+            <td>@venda.SubTotal</td>
+            <td>@venda.Desconto</td>
+            <td>@venda.Total</td>
+            <td style="display: flex">
+                <a class="btn-floating waves-effect waves-light red" data-position="left" data-delay="50"
+                   data-tooltip="Deletar">
+                    <i class="material-icons">delete</i>
+                </a>
+                <!--detalhes-->
+                <a class="btn-floating waves-effect waves-light red" data-position="left" data-delay="50"
+                   data-tooltip="Detalhes">
+                    <i class="material-icons">info</i>
+                </a>
+            </td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="5">Nenhum registro encontrado</td>
+    </tr>
+}
+
+<script>
+    
+</script>

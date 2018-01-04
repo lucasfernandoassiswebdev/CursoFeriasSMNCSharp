@@ -1,0 +1,52 @@
+﻿<link href="~/Lib/Css/Home.css" rel="stylesheet" type="text/css">
+
+<!--modal de cadastro de clientes-->
+@Html.Partial("../Cliente/CadastraCliente")
+
+<!--grid-->
+<div class="container">
+    <div class="row ajuste">
+        <div class="col s12 coluna">
+            <div class="center">
+                <h1 class="bold">Produtos</h1>
+            </div>
+            @Html.Partial("../Produto/TableProdutos")
+        </div>
+    </div>
+    <div class="row ajuste">
+        <div class="col s8 coluna">
+            <div class="center">
+                <h1 class="bold">Clientes</h1>
+            </div>
+            @Html.Partial("../Cliente/TableClientes")
+        </div>\
+        <div class="col s5 coluna">
+            <div class="center">
+                <h1 class="bold">Vendas</h1>
+            </div>
+            @Html.Partial("../Venda/TableVendas")
+        </div>
+    </div>
+</div>
+
+<script>
+
+    //Trazendo a lista de clientes
+    @*$.get('@Url.Action("Listar","Cliente")')
+        .done(function (data) {
+            $("#gridClientes tbody").html(data).slideDown("fast");
+        }).
+        fail(function (xhr) {
+            Materialize.toast(xhr.responseText, 5000);
+        });
+
+    //Trazendo a lista de produtos
+    $.get('@Url.Action("Listar", "Produto")')
+        .done(function (data) {
+            $("#gridProdutos tbody").html(data).slideDown("fast");
+        }).
+        fail(function (xhr) {
+            Materialize.toast(xhr.responseText, 5000);
+        });*@
+
+</script>
