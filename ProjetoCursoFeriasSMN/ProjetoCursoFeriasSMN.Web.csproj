@@ -117,7 +117,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Lib\Css\Geral.css" />
     <Content Include="Lib\Css\Home.css" />
@@ -126,6 +125,7 @@
     <Content Include="Lib\Images\smnicon.svg" />
     <Content Include="Lib\Images\smnwallpaper.png" />
     <Content Include="Lib\Javascript\Inicializacoes.js" />
+    <Content Include="Lib\Javascript\jquery.mask.js" />
     <Content Include="Lib\Javascript\materialize.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -161,9 +161,6 @@
     <Content Include="Lib\Fonts\Roboto\Roboto-Thin.woff2" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cliente\CadastraCliente.cshtml" />
     <Content Include="Views\Cliente\TableClientes.cshtml" />
@@ -182,6 +179,7 @@
     <Content Include="Views\Venda\DeletaVenda.cshtml" />
     <Content Include="Views\Venda\DetalhaVenda.cshtml" />
     <Content Include="Views\Venda\CadastraVenda.cshtml" />
+    <Content Include="Views\Venda\CadastraEndereco.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

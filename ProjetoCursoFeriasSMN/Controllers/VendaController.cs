@@ -9,6 +9,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
     {
         private readonly VendaApplication _appVenda = new VendaApplication();
         private readonly ClienteApplication _appCliente = new ClienteApplication();
+        private readonly ProdutoApplication _appProduto = new ProdutoApplication();
 
         public ActionResult Listar(int codigoCliente)
         {
@@ -19,7 +20,26 @@ namespace ProjetoCursoFeriasSMN.Controllers
             return View("GridVendas",response.Content);
         }
 
-        public ActionResult Cadastrar(Venda venda)
+        public ActionResult Cadastrar()
+        {
+            //Trazendo a lista de clientes
+            var responseClientes = _appCliente.Get();
+            if (responseClientes.Status != HttpStatusCode.OK)
+                return Error(responseClientes.ContentAsString);
+
+            //Trazendo a lista de produtos
+            var responseProdutos = _appProduto.Get();
+            if (responseProdutos.Status != HttpStatusCode.OK)
+                return Error(responseProdutos.ContentAsString);
+
+            return View("CadastraVenda", new Venda
+            {
+                Clientes = new SelectList(responseClientes.Content, "CodigoCliente", "Nome"),
+                Produtos = new SelectList(responseProdutos.Content, "CodigoProduto", "Nome")
+            });
+        }
+
+        public ActionResult CadastrarConfirma(Venda venda)
         {
             var response = _appVenda.Post(venda);
             if (response.Status != HttpStatusCode.OK)

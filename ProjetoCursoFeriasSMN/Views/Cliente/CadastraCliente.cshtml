@@ -4,88 +4,97 @@
     <div class="modal-content">
         <h4 class="bold">Cadastro de cliente</h4>
         <div class="row">
-            @Ajax.BeginForm("Salvar", "Cliente", new AjaxOptions
-       {
-           HttpMethod = "POST",
-           OnSuccess = "RecarregaGrid(data)",
-           OnFailure = "Error(xhr)"
-       }){
-            <div class="row">
-                <div class="input-field col s6">
-                    <label for="txtNome">Nome</label>
-                    <input id="txtNome" name="Nome" type="text">
+            @using (Ajax.BeginForm("Salvar", "Cliente", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "RecarregaGrid(data)",
+                OnFailure = "Error(xhr)"
+            }))
+            {
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtNome">Nome</label>
+                        <input id="txtNome" name="Nome" type="text">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtCpf">Cpf</label>
+                        <input id="txtCpf" name="Cpf" type="text">
+                    </div>
                 </div>
-                <div class="input-field col s6">
-                    <label for="txtCpf">Cpf</label>
-                    <input id="txtCpf" name="Cpf" type="text">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtFone">Telefone</label>
+                        <input id="txtFone" name="Telefone" type="text">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtEmail">Email</label>
+                        <input id="txtEmail" type="email" class="validate" data-error="e-mail incorreto" data-success="correto" name="Email">
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    <label for="txtFone">Telefone</label>
-                    <input id="txtFone" name="Telefone" type="text">
+                <h5>Endereço</h5>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtCep">Cep</label>
+                        <input id="txtCep" name="Cep" type="text">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtNumero">Numero</label>
+                        <input id="txtNumero" name="Numero" type="number">
+                    </div>
                 </div>
-                <div class="input-field col s6">
-                    <label for="txtEmail">Email</label>
-                    <input id="txtEmail" type="email" class="validate" data-error="e-mail incorreto" data-success="correto" name="Email">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtBairro">Bairro</label>
+                        <input id="txtBairro" name="Bairro" type="text">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtLogradouro">Logradouro</label>
+                        <input id="txtLogradouro" name="Logradouro" type="text">
+                    </div>
                 </div>
-            </div>
-            <h5>Endereço</h5>
-            <div class="row">
-                <div class="input-field col s12">
-                    <label for="txtCep">Cep</label>
-                    <input id="txtCep" name="Cep" type="text">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtCidade">Cidade</label>
+                        <input id="txtCidade" name="Cidade" type="text" />
+                    </div>
+                    <div class="input-field col s6">
+                        <select id="txtEstado" name="Estado">
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <label for="txtLogradouro">Logradouro</label>
-                    <input id="txtLogradouro" name="Logradouro" type="text">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="txtComplemento">Complemento</label>
+                        <textarea id="txtComplemento" name="Complemento" class="materialize-textarea"></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    <label for="txtBairro">Bairro</label>
-                    <input id="txtBairro" name="Bairro" type="text">
-                </div>
-                <div class="input-field col s6">
-                    <label for="txtCidade">Cidade</label>
-                    <input id="txtCidade" name="Cidade" type="text">
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <select id="txtEstado" name="Estado">
-                        <option value="AC">Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapá</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceará</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espírito Santo</option>
-                        <option value="GO">Goiás</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
-                        <option value="PA">Pará</option>
-                        <option value="PB">Paraíba</option>
-                        <option value="PR">Paraná</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piauí</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondônia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantins</option>
-                    </select>
-                </div>
-            </div>
             }
         </div>
     </div>
@@ -97,23 +106,58 @@
 </div>
 
 <script>
+    
+    $(".modal").modal();
+    $("select").material_select();
+
+    //Mascarando campos
+    $("#txtCpf").mask('000.000.000-00', { reverse: true });
+    $("#txtCep").mask('00000-000', { reverse: true });
+    $("#txtFone").mask('(00) Z0000-0000', { translation: { 'Z': { pattern: /[0-9]/, optional: true } } });
+
+
+    //Fazendo a requisição na API do ViaCep para preencher os dados do endereço automaticamente
+    $("#txtCep").blur(function () {
+        if ($(this).val().length > 0) {
+            $.get("https://viacep.com.br/ws/" + $(this).val().replace("-", "") + "/json/")
+                .done(function(data) {
+                    //Preenchendo os inputs com os dados
+                    $("#txtBairro").val(data.bairro);
+                    $("#txtLogradouro").val(data.logradouro);
+                    $("#txtCidade").val(data.localidade);
+                    $("#txtEstado").val(data.uf);
+                    $("select").material_select();
+
+                    $("#txtBairro, #txtLogradouro, #txtCidade, #txtEstado").trigger("focus")
+                        .attr("readonly", "readonly");
+                    $("#txtEstado").attr("disabled", "disabled");
+                })
+                .fail(function(xhr) {
+                    Materialize.toast(xhr.responseText, 5000);
+                });
+        } else {
+            $("#txtBairro, #txtLogradouro, #txtCidade, #txtEstado").trigger("focus")
+                .attr("readonly", "readonly");
+            $("#txtEstado").attr("disabled", "disabled");
+        }
+    });
 
     function RecarregaGrid(data) {
         //Exibindo um feedback de sucesso
         Materialize.Toast(data, 1000);
 
         //Fazendo a requisição no método que lista os produtos
-        $.get('@Url.Action("Listar")').success(function (data) {
-            $("#gridClientes tbody").html(data).slideDown("fast");
-        }).error(function (xhr) {
-            Materialize.toast(xhr.responseText, 4000);
-        });
+        $.get('@Url.Action("Listar")')
+            .done(function (data) {
+                $("#gridClientes tbody").html(data).slideDown("fast");
+            })
+            .fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 4000);
+            });
     }
 
     function Error(xhr) {
         Materialize.toast(xhr.responseText, 5000);
     }
-
-    $('.modal').modal();
 
 </script>

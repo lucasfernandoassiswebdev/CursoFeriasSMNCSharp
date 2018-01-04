@@ -12,7 +12,7 @@ namespace ProjetoCursoFeriasSMN.Domain.Entidades
         public decimal SubTotal { get; set; }
         public decimal Desconto { get; set; }
         public Endereco Endereco { get; set; }
-        public IEnumerable<Itens> Itens { get; set; }
+        public IEnumerable<Produto> Itens { get; set; }
 
         public decimal Total => SubTotal - Desconto;
     }

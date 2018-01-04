@@ -58,27 +58,27 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
         }
 
-        public string CadastraItensVenda(IEnumerable<Itens> listaItens, int codigoVenda)
+        public string CadastraItensVenda(IEnumerable<Produto> listaItens, int codigoVenda)
         {
             ExecuteProcedure(Procedures.CadastraItensVenda);
 
             var mensagemRetorno = string.Empty;
-            foreach (var item in listaItens)
-            {
-                AddParameter("@CodigoVenda", item.CodigoVenda);
-                AddParameter("@CodigoProduto", item.CodigoProduto);
-                AddParameter("@Preco", item.Preco);
-                AddParameter("@QuantidadeVendida", item.QuantidadeVendida);
+            //foreach (var item in listaItens)
+            //{
+            //    AddParameter("@CodigoVenda", item.CodigoVenda);
+            //    AddParameter("@CodigoProduto", item.CodigoProduto);
+            //    AddParameter("@Preco", item.Preco);
+            //    AddParameter("@QuantidadeVendida", item.QuantidadeVendida);
 
-                var retorno = ExecuteNonQueryWithReturn();
+            //    var retorno = ExecuteNonQueryWithReturn();
 
-                switch (retorno)
-                {
-                    case 1: mensagemRetorno = "Pau 1"; break;
-                    case 2: mensagemRetorno = "Pau 2"; break;
-                    case 3: mensagemRetorno = "Pau 3"; break;
-                }
-            }
+            //    switch (retorno)
+            //    {
+            //        case 1: mensagemRetorno = "Pau 1"; break;
+            //        case 2: mensagemRetorno = "Pau 2"; break;
+            //        case 3: mensagemRetorno = "Pau 3"; break;
+            //    }
+            //}
 
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
         }

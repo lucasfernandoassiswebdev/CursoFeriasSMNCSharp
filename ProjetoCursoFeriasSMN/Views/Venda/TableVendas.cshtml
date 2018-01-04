@@ -1,5 +1,7 @@
 ﻿@{ Layout = null;}
 
+<div id="modalCadastroDeVenda"></div>
+
 <table class="striped responsive-table" id="gridVendas">
     <thead>
     <tr>
@@ -11,7 +13,7 @@
         <th>
             <!--novo-->
             <a class="btn-floating waves-effect waves-light red tooltipped" style="float: right" data-position="left" data-delay="50"
-               data-tooltip="Cadastrar venda">
+               data-tooltip="Cadastrar venda" id="modalVenda">
                 <i class="material-icons">add_shopping_cart</i>
             </a>
         </th>
@@ -19,3 +21,19 @@
     </thead>
     <tbody style="display: none"></tbody>
 </table>
+
+<script>
+
+    $("#modalVenda").click(function() {
+
+        $.get('@Url.Action("Cadastrar")')
+            .done(function(data) {
+                $("#modalCadastroDeVenda").html(data);
+                $("#modalCadastraVenda").modal("open");
+            })
+            .fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 5000);
+            });
+    });
+
+</script>

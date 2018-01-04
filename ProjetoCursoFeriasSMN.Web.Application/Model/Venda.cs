@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace ProjetoCursoFeriasSMN.Web.Application.Model
 {
@@ -11,9 +12,13 @@ namespace ProjetoCursoFeriasSMN.Web.Application.Model
         public DateTime DataVenda { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Desconto { get; set; }
-        public IEnumerable<Produto> Itens;
         public Cliente Cliente { get; set; }
         public Endereco Endereco { get; set; }
+
+        public IEnumerable<Produto> Itens { get; set; }
+
+        public SelectList Clientes { get; set; }
+        public SelectList Produtos { get; set; }
 
         public decimal Total => SubTotal - Desconto;
     }
