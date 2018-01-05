@@ -44,6 +44,7 @@ else
             .done(function (data) {
                 $("#modalEdicaoProduto").html(data);
                 $("#modalEditarProduto").modal("open");
+                FocaInputs("#txtIdProdutoEditar, #txtNomeProdutoEditar, #txtEstoqueEditar, #txtPrecoEditar");
             }).fail(function (xhr) {
                 Materialize.toast(xhr.responseText, 5000);
             });
