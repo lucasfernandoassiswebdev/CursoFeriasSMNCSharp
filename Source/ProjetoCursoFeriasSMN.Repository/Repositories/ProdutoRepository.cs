@@ -14,27 +14,26 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public enum Procedures
         {
-            CadastraProduto,
+            SP_InsProduto,
             EditaProduto,
             DeletaProdtuo,
-            ListaProdutos,
+            SP_SelProdutos,
             SelecionarProduto
-        }   
+        }
 
         public string CadastraProduto(Produto produto)
         {
-            ExecuteProcedure(Procedures.CadastraProduto);
-            AddParameter("@nome", produto.Nome);
-            AddParameter("@estoque", produto.Estoque);
+            ExecuteProcedure(Procedures.SP_InsProduto);
+            AddParameter("@Nome", produto.Nome);
+            AddParameter("@Preco", produto.Preco);
+            AddParameter("@Estoque", produto.Estoque);
 
             var retorno = ExecuteNonQueryWithReturn();
             var mensagemRetorno = string.Empty;
 
             switch (retorno)
             {
-                case 1: mensagemRetorno = "Pau 1"; break;
-                case 2: mensagemRetorno = "Pau 2"; break;
-                case 3: mensagemRetorno = "Pau 3"; break;
+                case 1: mensagemRetorno = "Erro ao inserir o produto"; break;
             }
 
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
@@ -80,16 +79,19 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public IEnumerable<Produto> ListaProdutos()
         {
-            ExecuteProcedure(Procedures.ListaProdutos);
+            ExecuteProcedure(Procedures.SP_SelProdutos);
 
             var listaProdutos = new List<Produto>();
+
             using (var reader = ExecuteReader())
                 while (reader.Read())
                     listaProdutos.Add(new Produto
                     {
-                       Nome = reader.ReadAsString("Nome"),
-                       Estoque = reader.ReadAsInt("Estoque"),
-                       CodigoProduto = reader.ReadAsInt("CodigoProduto")
+                        CodigoProduto = reader.ReadAsInt("CodigoProduto"),
+                        Nome = reader.ReadAsString("Nome"),
+                        Preco = reader.ReadAsDecimal("Preco"),
+                        Estoque = reader.ReadAsInt("Estoque")
+
                     });
 
             return listaProdutos;
@@ -98,15 +100,16 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
         public Produto SelecionaProduto(int codigoProduto)
         {
             ExecuteProcedure(Procedures.SelecionarProduto);
-            AddParameter("@codigoProduto",codigoProduto);
+            AddParameter("@codigoProduto", codigoProduto);
 
             using (var reader = ExecuteReader())
-                if(reader.Read())
+                if (reader.Read())
                     return new Produto
                     {
+                        CodigoProduto = reader.ReadAsInt("CodigoProduto"),
                         Nome = reader.ReadAsString("Nome"),
-                        Estoque = reader.ReadAsInt("Estoque"),
-                        CodigoProduto = reader.ReadAsInt("CodigoProduto")
+                        Preco = reader.ReadAsDecimal("Preco"),
+                        Estoque = reader.ReadAsInt("Estoque")
                     };
 
             return null;

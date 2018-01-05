@@ -119,7 +119,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
                         {
                             Estado = reader.ReadAsString("Estado"),
                             Cidade = reader.ReadAsString("Cidade"),
-                            Cep = reader.ReadAsString("Cep"),
+                            Cep = reader.ReadAsInt("Cep"),
                             Bairro = reader.ReadAsString("Bairro"),
                             Logradouro = reader.ReadAsString("Logradouro"),
                             CodigoEndereco = reader.ReadAsInt("CodigoEndereco")
@@ -146,7 +146,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
                         {
                             Estado = reader.ReadAsString("Estado"),
                             Cidade = reader.ReadAsString("Cidade"),
-                            Cep = reader.ReadAsString("Cep"),
+                            Cep = reader.ReadAsInt("Cep"),
                             Bairro = reader.ReadAsString("Bairro"),
                             Logradouro = reader.ReadAsString("Logradouro"),
                             CodigoEndereco = reader.ReadAsInt("CodigoEndereco")

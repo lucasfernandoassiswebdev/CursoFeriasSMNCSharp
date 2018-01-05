@@ -14,7 +14,7 @@ namespace ProjetoCursoFeriasSMN.Repository.DataBase
 
         public Conexao()
         {
-            Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Nome do banco"].ToString());
+            Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["connectionString"].ToString());
         }
 
         public SqlConnection Open()

@@ -15,34 +15,36 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
         //Enum contendo o nome de nossas procedures
         public enum Procedures
         {
-            CadastraCliente,
-            EditaCliente,
-            DeletaCliente,
-            ListaClientes,
-            SelecionaCliente
+            SP_InsCliente,
+            SP_UpdDadosCliente,
+            SP_DelCliente,
+            SP_SelClientes,
+            SP_SelDadosCliente
         }
 
         public string CadastraCliente(Cliente cliente)
         {
-            ExecuteProcedure(Procedures.CadastraCliente);
-            AddParameter("@login", cliente.Nome);
-            AddParameter("@Cpf", cliente.Cpf);
+            ExecuteProcedure(Procedures.SP_InsCliente);
+            AddParameter("@CPF", cliente.Cpf);
+            AddParameter("@Nome", cliente.Nome);
             AddParameter("@Telefone", cliente.Telefone);
             AddParameter("@Email", cliente.Email);
-            AddParameter("@Bairro", cliente.Endereco.Bairro);
             AddParameter("@Cep", cliente.Endereco.Cep);
-            AddParameter("@Cidade", cliente.Endereco.Cidade);
-            AddParameter("@Estado", cliente.Endereco.Estado);
             AddParameter("@Logradouro", cliente.Endereco.Logradouro);
+            AddParameter("@Bairro", cliente.Endereco.Bairro);
+            AddParameter("@Cidade", cliente.Endereco.Cidade);
+            AddParameter("@UF", cliente.Endereco.Estado);
+            AddParameter("@Numero", cliente.Numero);
+            AddParameter("@Complemento", cliente.Complemento);
+
 
             var retorno = ExecuteNonQueryWithReturn();
             var mensagemRetorno = string.Empty;
 
             switch (retorno)
             {
-                case 1: mensagemRetorno = "Pau 1"; break;
-                case 2: mensagemRetorno = "Pau 2"; break;
-                case 3: mensagemRetorno = "Pau 3"; break;
+                case 1: mensagemRetorno = "Erro ao inserir o endereço"; break;
+                case 2: mensagemRetorno = "Erro ao inserir o cliente"; break;
             }
 
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
@@ -50,45 +52,46 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public string EditaCliente(Cliente cliente)
         {
-            ExecuteProcedure(Procedures.CadastraCliente);
-            AddParameter("@codigoCliente", cliente.CodigoCliente);
-            AddParameter("@login", cliente.CodigoEnderecoEspecifico);
-            AddParameter("@login", cliente.Nome);
-            AddParameter("@cpf", cliente.Cpf);
-            AddParameter("@telefone", cliente.Telefone);
-            AddParameter("@email", cliente.Email);
-            AddParameter("@bairro", cliente.Endereco.Bairro);
-            AddParameter("@cep", cliente.Endereco.Cep);
-            AddParameter("@cidade", cliente.Endereco.Cidade);
-            AddParameter("@estado", cliente.Endereco.Estado);
-            AddParameter("@logradouro", cliente.Endereco.Logradouro);
+            ExecuteProcedure(Procedures.SP_UpdDadosCliente);
+            AddParameter("@CodigoCliente", cliente.CodigoCliente);
+            AddParameter("@CodigoEndereco", cliente.CodigoEndereco);
+            AddParameter("@CPF", cliente.Cpf);
+            AddParameter("@Nome", cliente.Nome);
+            AddParameter("@Telefone", cliente.Telefone);
+            AddParameter("@Email", cliente.Email);
+            AddParameter("@Cep", cliente.Endereco.Cep);
+            AddParameter("@Logradouro", cliente.Endereco.Logradouro);
+            AddParameter("@Bairro", cliente.Endereco.Bairro);
+            AddParameter("@Cidade", cliente.Endereco.Cidade);
+            AddParameter("@UF", cliente.Endereco.Estado);
+            AddParameter("@Numero", cliente.Numero);
+            AddParameter("@Complemento", cliente.Complemento);
 
             var retorno = ExecuteNonQueryWithReturn();
-            var mensagemRetorno = "";
+            var mensagemRetorno = string.Empty;
 
             switch (retorno)
             {
-                case 1: mensagemRetorno = "Pau 1"; break;
-                case 2: mensagemRetorno = "Pau 2"; break;
-                case 3: mensagemRetorno = "Pau 3"; break;
+                case 1: mensagemRetorno = "Erro ao atualizar as informações do cliente"; break;
+                case 2: mensagemRetorno = "Erro ao atualizar as informações do endereço"; break;
             }
 
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
         }
 
-        public string DeletaCliente(int codigoCliente)
+        public string DeletaCliente(int codigoCliente, int codigoEndereco)
         {
-            ExecuteProcedure(Procedures.DeletaCliente);
-            AddParameter("@idCliente", codigoCliente);
+            ExecuteProcedure(Procedures.SP_DelCliente);
+            AddParameter("@CodigoCliente", codigoCliente);
+            AddParameter("@CodigoEndereco", codigoEndereco);
 
             var retorno = ExecuteNonQueryWithReturn();
-            var mensagemRetorno = "";
+            var mensagemRetorno = string.Empty;
 
             switch (retorno)
             {
-                case 1: mensagemRetorno = "Pau 1"; break;
-                case 2: mensagemRetorno = "Pau 2"; break;
-                case 3: mensagemRetorno = "Pau 3"; break;
+                case 1: mensagemRetorno = "Erro ao deletar o cliente"; break;
+                case 2: mensagemRetorno = "Erro ao deletar o endereço"; break;
             }
 
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
@@ -96,26 +99,28 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public Cliente SelecionaCliente(int codigoCliente)
         {
-            ExecuteProcedure(Procedures.SelecionaCliente);
-            AddParameter("@codigoCliente", codigoCliente);
+            ExecuteProcedure(Procedures.SP_SelDadosCliente);
+            AddParameter("@CodigoCliente", codigoCliente);
 
             using (var reader = ExecuteReader())
                 if (reader.Read())
                     return new Cliente
                     {
                         CodigoCliente = reader.ReadAsInt("CodigoCliente"),
+                        Cpf = reader.ReadAsString("CPF"),
                         Nome = reader.ReadAsString("Nome"),
-                        Cpf = reader.ReadAsString("Cpf"),
-                        Email = reader.ReadAsString("Email"),
                         Telefone = reader.ReadAsString("Telefone"),
+                        Email = reader.ReadAsString("Email"),
+                        Numero = reader.ReadAsShort("Numero"),
+                        Complemento = reader.ReadAsString("Complemento"),
                         Endereco = new Endereco
                         {
-                            Estado = reader.ReadAsString("Estado"),
-                            Cidade = reader.ReadAsString("Cidade"),
-                            Cep = reader.ReadAsString("Cep"),
-                            Bairro = reader.ReadAsString("Bairro"),
+                            CodigoEndereco = reader.ReadAsInt("CodigoEndereco"),
+                            Cep = reader.ReadAsInt("Cep"),
                             Logradouro = reader.ReadAsString("Logradouro"),
-                            CodigoEndereco = reader.ReadAsInt("CodigoEndereco")
+                            Bairro = reader.ReadAsString("Bairro"),
+                            Cidade = reader.ReadAsString("Cidade"),
+                            Estado = reader.ReadAsString("UF")
                         }
                     };
 
@@ -124,27 +129,20 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public IEnumerable<Cliente> ListaClientes()
         {
-            ExecuteProcedure(Procedures.ListaClientes);
+            ExecuteProcedure(Procedures.SP_SelClientes);
 
             var listaClientes = new List<Cliente>();
+
             using (var reader = ExecuteReader())
                 while (reader.Read())
                     listaClientes.Add(new Cliente
                     {
                         CodigoCliente = reader.ReadAsInt("CodigoCliente"),
+                        CodigoEndereco = reader.ReadAsInt("CodigoEndereco"),
+                        Cpf = reader.ReadAsString("CPF"),
                         Nome = reader.ReadAsString("Nome"),
-                        Cpf = reader.ReadAsString("Cpf"),
-                        Email = reader.ReadAsString("Email"),
                         Telefone = reader.ReadAsString("Telefone"),
-                        Endereco = new Endereco
-                        {
-                            Estado = reader.ReadAsString("Estado"),
-                            Cidade = reader.ReadAsString("Cidade"),
-                            Cep = reader.ReadAsString("Cep"),
-                            Bairro = reader.ReadAsString("Bairro"),
-                            Logradouro = reader.ReadAsString("Logradouro"),
-                            CodigoEndereco = reader.ReadAsInt("CodigoEndereco")
-                        }
+                        Email = reader.ReadAsString("Email")
                     });
 
             return listaClientes;

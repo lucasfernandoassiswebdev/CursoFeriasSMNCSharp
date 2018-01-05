@@ -15,6 +15,11 @@ namespace ProjetoCursoFeriasSMN.Repository.DataBase
             return r.GetInt32(r.GetOrdinal(campo));
         }
 
+        public static int ReadAsShort(this SqlDataReader r, string campo)
+        {
+            return r.GetInt16(r.GetOrdinal(campo));
+        }
+
         public static decimal ReadAsDecimal(this SqlDataReader r, string campo)
         {
             return r.GetDecimal(r.GetOrdinal(campo));

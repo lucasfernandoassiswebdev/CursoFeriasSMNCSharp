@@ -10,13 +10,13 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
     {
         private readonly ProdutoRepository _produtoRepository = new ProdutoRepository();
 
-        [HttpPost,Route("cadastra")]
+        [HttpPost, Route("cadastra")]
         public IHttpActionResult Post(Produto produto)
         {
             var response = _produtoRepository.CadastraProduto(produto);
 
             if (string.IsNullOrEmpty(response))
-                return Ok(response);
+                return Ok();
 
             return Content(HttpStatusCode.BadRequest, response);
         }
@@ -24,10 +24,10 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         [HttpPut, Route("edita")]
         public IHttpActionResult Put(Produto produto)
         {
-           var response = _produtoRepository.EditaProduto(produto);
+            var response = _produtoRepository.EditaProduto(produto);
 
             if (string.IsNullOrEmpty(response))
-                return Ok(response);
+                return Ok();
 
             return Content(HttpStatusCode.BadRequest, response);
         }
@@ -38,7 +38,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
             var response = _produtoRepository.DeletaProduto(codigoProduto);
 
             if (string.IsNullOrEmpty(response))
-                return Ok(response);
+                return Ok();
 
             return Content(HttpStatusCode.BadRequest, response);
         }

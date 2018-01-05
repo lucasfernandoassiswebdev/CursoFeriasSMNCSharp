@@ -47,7 +47,8 @@ namespace ProjetoCursoFeriasSMN.Controllers
                 if (responseCliente.Status != HttpStatusCode.OK)
                     return Error("Erro ao encontrar endereço do cliente!");
 
-                venda.CodigoEnderecoEntrega = responseCliente.Content.CodigoEnderecoEspecifico;
+                venda.CodigoEnderecoEntrega = responseCliente.Content.CodigoEndereco;
+                venda.Complemento = responseCliente.Content.Complemento;
             }
 
             var response = _appVenda.Post(venda);

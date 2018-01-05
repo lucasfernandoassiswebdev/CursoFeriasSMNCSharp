@@ -15,6 +15,7 @@ namespace ProjetoCursoFeriasSMN.Web.Application.Model
         public Cliente Cliente { get; set; }
         public Endereco Endereco { get; set; }
         public string IndicadorEntrega { get; set; }
+        public string Complemento { get; set; }
 
         public IEnumerable<Produto> Itens { get; set; }
         public SelectList Clientes { get; set; }

@@ -75,6 +75,8 @@ namespace ProjetoCursoFeriasSMN.Controllers
                 return Error(response.ContentAsString);
             if (response.Content == null)
                 return Error("Erro ao listar dados do cliente");
+            //Trazendo o endereço do cliente
+
 
             return View("DetalhaCliente", response.Content);
         }
