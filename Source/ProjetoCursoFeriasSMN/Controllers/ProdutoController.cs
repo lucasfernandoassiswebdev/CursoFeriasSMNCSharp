@@ -26,7 +26,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
             if (response.Status != HttpStatusCode.OK)
                 return Error(response.ContentAsString);
 
-            return Content(response.Content);
+            return Content("Produto salvo com suceso");
         }
 
         public ActionResult Deletar(int codigoProduto)

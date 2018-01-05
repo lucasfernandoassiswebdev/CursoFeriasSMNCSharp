@@ -4,52 +4,56 @@
     <div class="modal-content">
         <h4 class="bold" style="margin-left: -13px">Cadastro de produto</h4>
         <div class="row">
-           @using(Ajax.BeginForm("Salvar","Produto",new AjaxOptions
-           {
-               HttpMethod = "POST",
-               OnSuccess = "RecarregaGrid(data)",
-               OnFailure = "Error(xhr)"
-           })){ 
+            @using (Ajax.BeginForm("Salvar", "Produto", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "RecarregaGridProdutos(data)",
+                OnFailure = "Error(xhr)"
+            }))
+            {
                 <div class="row">
                     <div class="input-field col s12">
                         <label for="txtNomeProduto">Nome</label>
                         <input id="txtNomeProduto" name="Nome" type="text">
                     </div>
                 </div>
-               <div class="row">
-                   <div class="input-field col s6">
-                       <label for="txtEstoque">Estoque</label>
-                       <input id="txtEstoque" name="Estoque" type="number">
-                   </div>
-                   <div class="input-field col s6">
-                       <label for="txtValorProduto">Valor R$</label>
-                       <input id="txtValorProduto" name="Preco" type="text">
-                   </div>
-               </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="txtEstoque">Estoque</label>
+                        <input id="txtEstoque" name="Estoque" type="number">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="txtValorProduto">Valor R$</label>
+                        <input id="txtValorProduto" name="Preco" type="text">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="modal-action modal-close waves-effect waves-light btn">
+                        <i class="material-icons left">send</i>Cadastrar
+                    </button>
+                </div>
             }
         </div>
     </div>
-    <div class="modal-footer">
-        <a class="modal-action modal-close waves-effect waves-light btn" href="#!" type="submit">
-            <i class="material-icons left">send</i>Cadastrar
-        </a>
-    </div>
+
 </div>
 
 <script>
-    
+
     $('#txtValorProduto').mask("#.##0,00", { reverse: true });
 
-    function RecarregaGrid(data) {
+    function RecarregaGridProdutos(data) {
         //Exibindo um feedback de sucesso
-        Materialize.Toast(data, 1000);
+        Materialize.toast(data, 1000);
 
         //Fazendo a requisição no método que lista os produtos
-        $.get('@Url.Action("Listar")').success(function(data) {
-            $("#gridProdutos tbody").html(data).slideDown("fast");
-        }).error(function(xhr) {
-            Materialize.toast(xhr.responseText, 4000);
-        });
+        $.get('@Url.Action("Listar","Produto")')
+            .done(function (data) {
+                $("#gridProdutos tbody").html(data).slideDown("fast");
+            })
+            .fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 4000);
+            });
     }
 
     function Error(xhr) {

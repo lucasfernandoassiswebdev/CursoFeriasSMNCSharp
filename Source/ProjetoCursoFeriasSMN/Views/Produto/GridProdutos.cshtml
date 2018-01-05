@@ -6,18 +6,16 @@
     foreach (var produto in Model)
     {
         <tr data-codigoProduto="@produto.CodigoProduto">
+            <td>@produto.CodigoProduto</td>
             <td>@produto.Nome</td>
+            <td>@produto.Preco</td>
             <td>@produto.Estoque</td>
-            <td style="display: flex">
-                <a class="btn-floating waves-effect waves-light red" onclick="DetalhaProduto(this)" data-position="bottom"
-                   data-delay="50" data-tooltip="Detalhes">
-                    <i class="material-icons">info</i>
-                </a>
-                <a class="btn-floating waves-effect waves-light red" onclick="EditaProduto(this)" data-position="bottom"
+            <td style="float:right">
+                <a class="btn-floating waves-effect waves-light red tooltipped" onclick="EditaProduto(this)" data-position="bottom"
                    data-delay="50" data-tooltip="Editar">
                     <i class="material-icons">mode_edit</i>
                 </a>
-                <a class="btn-floating waves-effect waves-light red" onclick="DeletaProduto(this)" ata-position="bottom"
+                <a class="btn-floating waves-effect waves-light red tooltipped" onclick="DeletaProduto(this)" ata-position="bottom"
                    data-delay="50" data-tooltip="Deletar">
                     <i class="material-icons">delete</i>
                 </a>
@@ -33,6 +31,8 @@ else
 }
 
 <script>
+    
+    $(".tooltipped").tooltip({ delay: 50 });
 
     function EditaProduto(element) {
         var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
