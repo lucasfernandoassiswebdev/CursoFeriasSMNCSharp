@@ -16,7 +16,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
             var response = _clienteRepository.CadastraCliente(cliente);
 
             if (string.IsNullOrEmpty(response))
-                return Ok();
+                return Ok("Cliente cadastrado com sucesso");
 
             return Content(HttpStatusCode.BadRequest, response);
         }
@@ -32,7 +32,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
             return Content(HttpStatusCode.BadRequest, response);
         }
 
-        [HttpDelete, Route("deleta/{codigoCliente}")]
+        [HttpDelete, Route("deleta/{codigoCliente}/{codigoEndereco}")]
         public IHttpActionResult Delete(int codigoCliente, int codigoEndereco)
         {
             var response = _clienteRepository.DeletaCliente(codigoCliente, codigoEndereco);

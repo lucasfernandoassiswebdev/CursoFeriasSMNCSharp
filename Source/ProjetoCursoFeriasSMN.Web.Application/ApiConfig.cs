@@ -2,6 +2,6 @@
 {
     public class ApiConfig
     {
-        public static string EnderecoApi { get; set; } = "http://localhost:2514/api";
+        public static string EnderecoApi { get; set; } = "http://localhost:23538/api";
     }
 }

@@ -112,10 +112,10 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
                         Telefone = reader.ReadAsString("Telefone"),
                         Email = reader.ReadAsString("Email"),
                         Numero = reader.ReadAsShort("Numero"),
-                        Complemento = reader.ReadAsString("Complemento"),
+                        Complemento = reader.ReadAsString("Complemento") ?? "Nenhum",
+                        CodigoEndereco = reader.ReadAsInt("CodigoEndereco"),
                         Endereco = new Endereco
                         {
-                            CodigoEndereco = reader.ReadAsInt("CodigoEndereco"),
                             Cep = reader.ReadAsInt("Cep"),
                             Logradouro = reader.ReadAsString("Logradouro"),
                             Bairro = reader.ReadAsString("Bairro"),

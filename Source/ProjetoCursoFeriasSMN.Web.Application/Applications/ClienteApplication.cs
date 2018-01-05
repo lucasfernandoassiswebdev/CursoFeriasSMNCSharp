@@ -27,11 +27,11 @@ namespace ProjetoCursoFeriasSMN.Web.Application.Applications
             }
         }
 
-        public Response<string> Delete(int codigoCliente)
+        public Response<string> Delete(int codigoCliente, int codigoEndereco)
         {
             using (var client = new HttpClient())
             {
-                var response = client.DeleteAsync($"{_enderecoApi}/deleta/{codigoCliente}").Result;
+                var response = client.DeleteAsync($"{_enderecoApi}/deleta/{codigoCliente}/{codigoEndereco}").Result;
                 return new Response<string>(response.Content.ReadAsStringAsync().Result, response.StatusCode);
             }
         }

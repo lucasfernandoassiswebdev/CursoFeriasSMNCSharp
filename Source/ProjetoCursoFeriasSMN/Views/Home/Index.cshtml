@@ -19,7 +19,7 @@
                 <h1 class="bold">Clientes</h1>
             </div>
             @Html.Partial("../Cliente/TableClientes")
-        </div>\
+        </div>
         <div class="col s5 coluna">
             <div class="center">
                 <h1 class="bold">Vendas</h1>
@@ -32,7 +32,7 @@
 <script>
 
     //Trazendo a lista de clientes
-    @*$.get('@Url.Action("Listar","Cliente")')
+    $.get('@Url.Action("Listar","Cliente")')
         .done(function (data) {
             $("#gridClientes tbody").html(data).slideDown("fast");
         }).
@@ -41,7 +41,7 @@
         });
 
     //Trazendo a lista de produtos
-    $.get('@Url.Action("Listar", "Produto")')
+    @*$.get('@Url.Action("Listar", "Produto")')
         .done(function (data) {
             $("#gridProdutos tbody").html(data).slideDown("fast");
         }).

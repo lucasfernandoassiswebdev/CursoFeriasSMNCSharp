@@ -124,7 +124,6 @@
     <Content Include="Lib\Images\smnicon.png" />
     <Content Include="Lib\Images\smnicon.svg" />
     <Content Include="Lib\Images\smnwallpaper.png" />
-    <Content Include="Lib\Javascript\Inicializacoes.js" />
     <Content Include="Lib\Javascript\jquery.mask.js" />
     <Content Include="Lib\Javascript\materialize.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />

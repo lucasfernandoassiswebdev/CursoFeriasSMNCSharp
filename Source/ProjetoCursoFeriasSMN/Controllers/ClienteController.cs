@@ -26,14 +26,16 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult Salvar(Cliente cliente)
         {
-            //Se o objeto cliente que chegou no parâmetro tiver a propriedade CodigoCliente, significa que o cliente deve ser editado,
+            if (cliente.Complemento == null)
+                cliente.Complemento = string.Empty;
+
+             //Se o objeto cliente que chegou no parâmetro tiver a propriedade CodigoCliente, significa que o cliente deve ser editado,
             //do contrário é um novo cadastro
             var response = cliente.CodigoCliente != 0 ? _appCliente.Put(cliente) : _appCliente.Post(cliente);
             if (response.Status != HttpStatusCode.OK)
                 return Error(response.ContentAsString);
 
-
-            return Content(response.Content);
+            return Content("Salvo com sucesso");
         }
 
         //Este método apenas carrega a tela que deleta o cliente
@@ -49,9 +51,9 @@ namespace ProjetoCursoFeriasSMN.Controllers
         }
 
         //Este método apaga de fato o cliente
-        public ActionResult DeletarConfirma(int codigoCliente)
+        public ActionResult DeletarConfirma(int codigoCliente, int codigoEndereco)
         {
-            var response = _appCliente.Delete(codigoCliente);
+            var response = _appCliente.Delete(codigoCliente,codigoEndereco);
             if (response.Status != HttpStatusCode.OK)
                 return Error(response.ContentAsString);
 

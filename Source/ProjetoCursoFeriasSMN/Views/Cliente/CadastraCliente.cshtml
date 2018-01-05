@@ -11,6 +11,7 @@
                 OnFailure = "Error(xhr)"
             }))
             {
+                <input type="hidden" id="txtEstadoHidden" name="Endereco.Estado" value="AC" />
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="txtNome">Nome</label>
@@ -35,7 +36,7 @@
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="txtCep">Cep</label>
-                        <input id="txtCep" name="Cep" type="text">
+                        <input id="txtCep" name="Endereco.Cep" type="text">
                     </div>
                     <div class="input-field col s6">
                         <label for="txtNumero">Numero</label>
@@ -45,20 +46,20 @@
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="txtBairro">Bairro</label>
-                        <input id="txtBairro" name="Bairro" type="text">
+                        <input id="txtBairro" name="Endereco.Bairro" type="text">
                     </div>
                     <div class="input-field col s6">
                         <label for="txtLogradouro">Logradouro</label>
-                        <input id="txtLogradouro" name="Logradouro" type="text">
+                        <input id="txtLogradouro" name="Endereco.Logradouro" type="text">
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="txtCidade">Cidade</label>
-                        <input id="txtCidade" name="Cidade" type="text" />
+                        <input id="txtCidade" name="Endereco.Cidade" type="text" />
                     </div>
                     <div class="input-field col s6">
-                        <select id="txtEstado" name="Estado">
+                        <select id="txtEstado">
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
                             <option value="AP">Amapá</option>
@@ -96,17 +97,21 @@
                         <textarea id="txtComplemento" name="Complemento" class="materialize-textarea"></textarea>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="submit" class="modal-action modal-close waves-effect waves-light btn">
+                        <i class="material-icons left">send</i>Cadastrar
+                    </button>
+                </div>
             }
         </div>
-    </div>
-    <div class="modal-footer">
-        <a class="modal-action modal-close waves-effect waves-light btn" href="#!" type="submit">
-            <i class="material-icons left">send</i>Cadastrar
-        </a>
     </div>
 </div>
 
 <script>
+
+    $("#txtEstado").change(function () {
+        $("#txtEstadoHidden").val($(this).val());
+    });
 
     $(".modal").modal();
     $("select").material_select();
@@ -133,18 +138,21 @@
                     $("#txtEstado").attr("disabled", "disabled");
                 })
                 .fail(function () {
+                    HabilitaCampos();
                     Materialize.toast("Cep não encontrado", 5000);
                 });
-        } else
-            HabilitaCampos();
+            return;
+        }
+
+        HabilitaCampos();
     });
 
     function RecarregaGrid(data) {
         //Exibindo um feedback de sucesso
-        Materialize.Toast(data, 1000);
+        Materialize.toast(data, 1000);
 
         //Fazendo a requisição no método que lista os produtos
-        $.get('@Url.Action("Listar")')
+        $.get('@Url.Action("Listar","Cliente")')
             .done(function (data) {
                 $("#gridClientes tbody").html(data).slideDown("fast");
             })
@@ -158,7 +166,7 @@
     }
 
     function HabilitaCampos() {
-        $("#txtBairro, #txtLogradouro, #txtCidade, #txtEstado").trigger("focus").attr("readonly", "readonly");
+        $("#txtBairro, #txtLogradouro, #txtCidade, #txtEstado").trigger("focus").removeAttr("readonly");
         $("#txtEstado").removeAttr("disabled");
     }
 

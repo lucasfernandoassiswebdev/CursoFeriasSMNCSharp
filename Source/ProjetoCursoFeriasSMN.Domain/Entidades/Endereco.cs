@@ -2,7 +2,7 @@
 {
     public class Endereco
     {
-        public int CodigoEndereco { get; set; }
+        public int? CodigoEndereco { get; set; }
         public int Cep { get; set; }
         public string Logradouro { get; set; }
         public string Bairro { get; set; }
