@@ -15,10 +15,10 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
         public enum Procedures
         {
             SP_InsProduto,
-            EditaProduto,
-            DeletaProdtuo,
+            SP_UpdProduto,
+            SP_DelProduto,
             SP_SelProdutos,
-            SelecionarProduto
+            SP_SelDadosProduto
         }
 
         public string CadastraProduto(Produto produto)
@@ -41,7 +41,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public string EditaProduto(Produto produto)
         {
-            ExecuteProcedure(Procedures.EditaProduto);
+            ExecuteProcedure(Procedures.SP_UpdProduto);
             AddParameter("@nome", produto.Nome);
             AddParameter("@estoque", produto.Estoque);
             AddParameter("@idProduto", produto.CodigoProduto);
@@ -51,9 +51,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
             switch (retorno)
             {
-                case 1: mensagemRetorno = "Pau 1"; break;
-                case 2: mensagemRetorno = "Pau 2"; break;
-                case 3: mensagemRetorno = "Pau 3"; break;
+                case 1: mensagemRetorno = "Erro ao atualizar as informações do produto"; break;
             }
 
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
@@ -61,7 +59,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public string DeletaProduto(int codigoProduto)
         {
-            ExecuteProcedure(Procedures.DeletaProdtuo);
+            ExecuteProcedure(Procedures.SP_DelProduto);
             AddParameter("@idProduto", codigoProduto);
 
             var retorno = ExecuteNonQueryWithReturn();
@@ -69,9 +67,8 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
             switch (retorno)
             {
-                case 1: mensagemRetorno = "Pau 1"; break;
-                case 2: mensagemRetorno = "Pau 2"; break;
-                case 3: mensagemRetorno = "Pau 3"; break;
+                case 1: mensagemRetorno = "Exclusão não permitida, o produto esta vinculada a uma venda"; break;
+                case 2: mensagemRetorno = "Erro ao excluir o produto"; break;
             }
 
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
@@ -98,7 +95,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public Produto SelecionaProduto(int codigoProduto)
         {
-            ExecuteProcedure(Procedures.SelecionarProduto);
+            ExecuteProcedure(Procedures.SP_SelDadosProduto);
             AddParameter("@codigoProduto", codigoProduto);
 
             using (var reader = ExecuteReader())
