@@ -83,7 +83,14 @@ CREATE PROCEDURE [dbo].[SP_InsVenda]
 	@SubTotal		decimal(10,2),
 	@Total			decimal(10,2),
 	@Desconto		decimal(10,2),
-	@Entrega		char(1)
+	@Entrega		char(1),
+	@Cep			int			= NULL,
+	@Logradouro		varchar(50)	= NULL,
+	@Bairro			varchar(30) = NULL,
+	@Cidade			varchar(30) = NULL,
+	@UF				char(2)		= NULL,
+	@Numero			smallint	= NULL,
+	@Complemento	varchar(30) = NULL
 
 	AS
 
@@ -99,20 +106,72 @@ CREATE PROCEDURE [dbo].[SP_InsVenda]
 							C -- Os produtos da venda será entregue no endereço do cliente.
 
 		Retornos......: -1 - Erro ao cadastrar a venda.
-						
-		Exemplo....... EXEC [dbo].[SP_InsVenda] 1, 1100.00, 1000.00, 100.00, 'S'
+						-2 - Erro ao cadastrar o endereço.
+						-3 - Erro ao cadastrar o endereço de entrega.
+						 
+		Exemplo....... EXEC [dbo].[SP_InsVenda] 1, 1100.00, 1000.00, 100.00, 'S', 14704545, 'Rua: Das Flores', 'Centro', 'Franca', 'SP', 589, NULL
 
 	*/
 
 	BEGIN
 
-		INSERT INTO [dbo].[Vendas](CodigoCliente, DataVenda, SubTotal, Desconto, Total, Entrega)
-			VALUES(@CodigoCliente, GETDATE(), @SubTotal, @Desconto, @Total, @Entrega) 
+		DECLARE @CodigoVenda			int,
+				@CodigoEndereco			int,
+				@NumeroCliente			smallint,
+				@ComplementoCliente		varchar(30)
 
+		INSERT INTO [dbo].[Vendas](CodigoCliente, DataVenda, SubTotal, Desconto, Total, Entrega)
+			VALUES(@CodigoCliente, GETDATE(), @SubTotal, @Desconto, @Total, @Entrega)
+			
 		IF @@ERROR <> 0 OR @@ROWCOUNT = 0
 			RETURN -1
 
-		RETURN SCOPE_IDENTITY()
+		SET @CodigoVenda = SCOPE_IDENTITY()
+
+		IF @Entrega = 'N'
+			RETURN @CodigoVenda
+
+		IF @Entrega = 'S'
+			BEGIN
+				
+				IF NOT EXISTS(SELECT TOP 1 1
+								FROM [dbo].[Enderecos]
+								WHERE Cep = @Cep)
+					BEGIN
+
+						INSERT INTO [dbo].[Enderecos](Cep, Logradouro, Bairro, Cidade, UF)
+							VALUES(@Cep, @Logradouro, @Bairro, @Cidade, @UF)
+
+						IF @@ERROR <> 0 OR @@ROWCOUNT = 0
+							RETURN -2
+
+						SET @CodigoEndereco = SCOPE_IDENTITY()
+
+					END
+				ELSE
+					SET @CodigoEndereco = (SELECT CodigoEndereco
+											FROM [dbo].[Enderecos]
+											WHERE Cep = @Cep)
+
+			END
+
+		IF @Entrega = 'C'
+			SELECT @CodigoEndereco = CodigoEndereco, 
+				   @NumeroCliente = Numero, 
+				   @ComplementoCliente = Complemento
+				FROM [dbo].[Clientes] 
+					WHERE CodigoCliente = @CodigoCliente
+
+		INSERT INTO [dbo].[EnderecoEntrega](CodigoEndereco, CodigoVenda, Numero, Complemento)
+			VALUES(@CodigoEndereco,
+			       @CodigoVenda, 
+				   CASE WHEN @Entrega = 'S' THEN @Numero ELSE @NumeroCliente END, 
+				   CASE WHEN @Entrega = 'S' THEN @Complemento ELSE @ComplementoCliente END)
+
+		IF @@ERROR <> 0 OR @@ROWCOUNT = 0
+			RETURN -3
+
+		RETURN @CodigoVenda
 
 	END
 
