@@ -187,6 +187,7 @@ CREATE PROCEDURE [dbo].[SP_UpdDadosCliente]
 	BEGIN
 	
 		BEGIN TRANSACTION
+
 			UPDATE [dbo].[Clientes]
 				SET CPF = @CPF,
 					Nome = @Nome,

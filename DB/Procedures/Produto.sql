@@ -128,7 +128,7 @@ CREATE PROCEDURE [dbo].[SP_UpdProduto]
 		Retornos......: 0 - Processamento OK!
 						1 - Erro ao atualizar as informações do produto.
 
-		Exemplo....... EXEC [dbo].[SP_UpdProduto] 1, 'Arroz', 8.00, 150
+		Exemplo....... EXEC [dbo].[SP_UpdProduto] 1, 'Arroz', 7.50, 80
 
 	*/
 
@@ -138,6 +138,7 @@ CREATE PROCEDURE [dbo].[SP_UpdProduto]
 			SET Nome = @Nome,
 				Preco = @Preco,
 				Estoque = @Estoque
+			WHERE CodigoProduto = @CodigoProduto
 
 		IF @@ERROR <> 0 OR @@ROWCOUNT = 0
 			RETURN 1
@@ -176,7 +177,7 @@ CREATE PROCEDURE [dbo].[SP_DelProduto]
 	BEGIN
 
 		IF EXISTS(SELECT TOP 1 1
-					FROM [dbo].[VendaItem]
+					FROM [dbo].[VendaItens]
 					WHERE CodigoProduto = @CodigoProduto)
 			RETURN 1
 
@@ -191,3 +192,41 @@ CREATE PROCEDURE [dbo].[SP_DelProduto]
 	END
 
 GO
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[TRG_HistoricoProduto]') AND type = 'TR')
+	DROP TRIGGER [dbo].[TRG_HistoricoProduto]
+
+GO
+
+CREATE TRIGGER [dbo].[TRG_HistoricoProduto]
+	ON [dbo].[Produtos]
+	FOR UPDATE
+
+	AS
+
+	/* Documentação
+
+		Arquivo.......: Produto.sql
+		Autor.........: Bruno Alves
+		Data..........: 04/01/2017
+		Objetivo......: Manter um histórico dos produtos.
+
+		Exemplo....... EXEC [dbo].[TRG_HistoricoProduto]
+
+	*/
+
+	BEGIN
+
+		INSERT INTO [dbo].[HistoricoProdutos](CodigoProduto, Nome, Preco, Estoque)
+			SELECT CodigoProduto,
+				   Nome,
+				   Preco,
+				   Estoque
+				FROM deleted
+
+	END
+
+GO
+
+

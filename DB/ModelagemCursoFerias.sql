@@ -1,10 +1,14 @@
 
-CREATE DATABASE CursoFerias
+IF DB_ID('CursoFerias') IS NOT NULL 
+	DROP DATABASE CursoFerias
 
+IF @@ERROR = 3702 
+	PRINT('Banco de Dados não pode ser dropado, pois existem conexões am aberto.')
+
+CREATE DATABASE CursoFerias
 GO
 
 USE CursoFerias
-
 GO
 
 CREATE TABLE Enderecos
@@ -53,15 +57,24 @@ CREATE TABLE Produtos
 (
 	CodigoProduto int primary key identity(1,1),
 	Nome varchar(50) NOT NULL,
-	Preco decimal(10,2),
+	Preco decimal(10,2) NOT NULL,
 	Estoque smallint NOT NULL
 )
 
-CREATE TABLE VendaItem
+CREATE TABLE HistoricoProdutos
+(
+	CodigoHistorico int primary key identity(1,1),
+	CodigoProduto	int,
+	Nome varchar(50) NOT NULL,
+	Preco decimal(10,2) NOT NULL,
+	Estoque smallint NOT NULL
+)
+
+CREATE TABLE VendaItens
 (
 	CodigoVenda	int foreign key references Vendas(CodigoVenda),
 	CodigoProduto int foreign key references Produtos(CodigoProduto),
 	QuantidadeVendida smallint NOT NULL,
-	CONSTRAINT PK_VendaItem PRIMARY KEY(CodigoVenda, CodigoProduto)
+	CONSTRAINT PK_VendaItens PRIMARY KEY(CodigoVenda, CodigoProduto)
 )
 			
