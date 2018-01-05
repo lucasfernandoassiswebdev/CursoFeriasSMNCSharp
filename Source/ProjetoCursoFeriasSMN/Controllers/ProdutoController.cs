@@ -50,7 +50,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
                 return Content(response.ContentAsString);
             }
 
-            return Content(response.Content);
+            return Content("Produto deletado com sucesso");
         }
 
         public ActionResult Listar()

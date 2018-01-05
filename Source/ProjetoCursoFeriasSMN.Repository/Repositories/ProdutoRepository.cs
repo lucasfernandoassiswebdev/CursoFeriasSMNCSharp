@@ -61,7 +61,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
         public string DeletaProduto(int codigoProduto)
         {
             ExecuteProcedure(Procedures.SP_DelProduto);
-            AddParameter("@idProduto", codigoProduto);
+            AddParameter("@CodigoProduto", codigoProduto);
 
             var retorno = ExecuteNonQueryWithReturn();
             var mensagemRetorno = string.Empty;

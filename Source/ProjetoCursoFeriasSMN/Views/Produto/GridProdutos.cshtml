@@ -35,11 +35,9 @@ else
     $(".tooltipped").tooltip({ delay: 50 });
 
     function EditaProduto(element) {
-        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
-
         $.get('@Url.Action("Editar","Produto")',
                 {
-                    codigoProduto: codigoProduto
+                    codigoProduto: $(element).closest("tr").attr("data-codigoProduto")
                 })
             .done(function (data) {
                 $("#modalEdicaoProduto").html(data);
@@ -50,32 +48,15 @@ else
             });
     }
 
-
-    function DetalhaProduto(element) {
-        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
-
-        $.get('@Url.Action("DetalharProduto","Produto")',
-                {
-                    codigoProduto: codigoProduto
-                })
-            .done(function (data) {
-                $("#modalDetalharProduto").html(data);
-                $("#modalDetalhesProduto").modal("open");
-            }).fail(function (xhr) {
-                Materialize.toast(xhr.responseText, 5000);
-            });
-    }
-
     function DeletaProduto(element) {
-        var codigoProduto = $(element).closest("tr").attr("data-codigoProduto");
-
         $.get('@Url.Action("Deletar","Produto")',
                 {
-                    codigoProduto: codigoProduto
+                    codigoProduto: $(element).closest("tr").attr("data-codigoProduto")
                 })
             .done(function (data) {
                 $("#modalDeletaProduto").html(data);
                 $("#modalDeletarProduto").modal("open");
+                FocaInputs("#txtIdProdutoDeletar, #txtNomeProdutoDeletar, #txtEstoqueDeletar, #txtPrecoDeletar");
             }).fail(function (xhr) {
                 Materialize.toast(xhr.responseText, 5000);
             });
