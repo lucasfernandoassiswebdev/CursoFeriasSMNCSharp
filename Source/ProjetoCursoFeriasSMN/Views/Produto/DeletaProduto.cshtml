@@ -8,7 +8,7 @@
             @Ajax.BeginForm("DeletarConfirmado", "Produto", new AjaxOptions
        {
            HttpMethod = "GET",
-           OnSuccess = "RecarregaGrid(data)",
+           OnSuccess = "RecarregaGridDeletaProduto(data)",
            OnFailure = "Error(xhr)"
        }){
             <input type="hidden" id="codigoProduto" name="codigoProduto" value="@Model.CodigoProduto"/>
@@ -40,12 +40,12 @@
 
 <script>
 
-    function RecarregaGrid(data) {
+    function RecarregaGridDeletaProduto(data) {
         //Exibindo um feedback de sucesso
         Materialize.Toast(data, 1000);
 
         //Fazendo a requisição no método que lista os produtos
-        $.get('@Url.Action("Listar")').success(function (data) {
+        $.get('@Url.Action("Listar","Produto")').success(function (data) {
             $("#gridProdutos tbody").html(data).slideDown("fast");
         }).error(function (xhr) {
             Materialize.toast(xhr.responseText, 4000);

@@ -42,9 +42,10 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
         public string EditaProduto(Produto produto)
         {
             ExecuteProcedure(Procedures.SP_UpdProduto);
-            AddParameter("@nome", produto.Nome);
-            AddParameter("@estoque", produto.Estoque);
-            AddParameter("@idProduto", produto.CodigoProduto);
+            AddParameter("@CodigoProduto", produto.CodigoProduto);
+            AddParameter("@Nome", produto.Nome);
+            AddParameter("@Preco", produto.Preco);
+            AddParameter("@Estoque", produto.Estoque);
 
             var retorno = ExecuteNonQueryWithReturn();
             var mensagemRetorno = string.Empty;
@@ -105,7 +106,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
                         CodigoProduto = reader.ReadAsInt("CodigoProduto"),
                         Nome = reader.ReadAsString("Nome"),
                         Preco = reader.ReadAsDecimal("Preco"),
-                        Estoque = reader.ReadAsInt("Estoque")
+                        Estoque = reader.ReadAsShort("Estoque")
                     };
 
             return null;

@@ -161,10 +161,6 @@
             });
     }
 
-    function Error(xhr) {
-        Materialize.toast(xhr.responseText, 5000);
-    }
-
     function HabilitaCampos() {
         $("#txtBairro, #txtLogradouro, #txtCidade, #txtEstado").trigger("focus").removeAttr("readonly");
         $("#txtEstado").removeAttr("disabled");
