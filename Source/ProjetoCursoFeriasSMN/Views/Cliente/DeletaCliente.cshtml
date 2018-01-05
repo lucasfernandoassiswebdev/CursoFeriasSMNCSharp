@@ -90,14 +90,16 @@
 
     function RecarregaGrid(data) {
         //Exibindo um feedback de sucesso
-        Materialize.Toast(data, 1000);
+        Materialize.toast(data, 1000);
 
         //Fazendo a requisição no método que lista os produtos
-        $.get('@Url.Action("Listar","Cliente")').success(function (data) {
-            $("#gridClientes tbody").html(data).slideDown("fast");
-        }).error(function (xhr) {
-            Materialize.toast(xhr.responseText, 4000);
-        });
+        $.get('@Url.Action("Listar","Cliente")')
+            .done(function (data) {
+                $("#gridClientes tbody").html(data).slideDown("fast");
+            })
+            .fail(function (xhr) {
+                Materialize.toast(xhr.responseText, 4000);
+            });
     }
 
     function Error(xhr) {
