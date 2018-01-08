@@ -66,7 +66,7 @@
 
 <script>
     
-    $("#txtCep").blur(function () {
+    $("#txtCepCadastro").blur(function () {
         if ($(this).val().length > 0) {
             $.get("https://viacep.com.br/ws/" + $(this).val().replace("-", "") + "/json/")
                 .done(function(data) {
@@ -90,7 +90,7 @@
     });
 
     function HabilitaCampos() {
-        $("#txtBairroCadastro, #txtLogradouroCadastro, #txtCidadeCadastro, #txtEstadoCadastro").trigger("focus").attr("readonly", "readonly");
+        $("#txtBairroCadastro, #txtLogradouroCadastro, #txtCidadeCadastro, #txtEstadoCadastro").trigger("focus").removeAttr("readonly");
         $("#txtEstadoCadastro").removeAttr("disabled");
     }
 

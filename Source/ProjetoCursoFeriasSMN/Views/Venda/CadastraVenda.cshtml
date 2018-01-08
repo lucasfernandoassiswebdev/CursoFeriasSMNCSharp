@@ -47,16 +47,14 @@
             <!--opção de entrega-->
             <h4>Engrega</h4>
             <div class="row">
-                <div class="input-field col s4" style="display: flex">
-                    <input name="IndicadorEntrega" type="radio" id="opcEntrega" value="C" />
-                    <label for="opcEntrega">Endereço do cliente</label>
+                <input name="IndicadorEntrega" type="radio" id="opcEntrega" value="C" />
+                <label for="opcEntrega">Endereço do cliente</label>
 
-                    <input name="IndicadorEntrega" type="radio" id="opcCadastra" value="S" />
-                    <label for="opcCadastra">Cadastrar</label>
+                <input name="IndicadorEntrega" type="radio" id="opcCadastra" value="S" />
+                <label for="opcCadastra">Cadastrar</label>
 
-                    <input name="IndicadorEntrega" type="radio" id="opcRetirado" value="N" />
-                    <label for="opcRetirado">Retirado no local</label>
-                </div>
+                <input name="IndicadorEntrega" type="radio" id="opcRetirado" value="N" />
+                <label for="opcRetirado">Retirado no local</label>
             </div>
             <!--Formulário de cadastro de endereço-->
             <div id="formCadastraEndereco" style="display: none">
@@ -130,6 +128,7 @@
                                         "data-position": "bottom",
                                         "data-delay": 50,
                                         "data-tooltip": "Remover item",
+                                        "onclick": "DeletaLinha(this)",
                                         html: [
                                             $("<i>",
                                                 {
@@ -144,6 +143,11 @@
         CalculaTotal();
         $(".tooltipped").tooltip({ delay: 50 });
     });
+
+    function DeletaLinha(element) {
+        $(element).closest("tr").remove();
+        CalculaTotal();
+    }
 
     //Finalizando a compra
     $("#finalizaCompra").click(function () {

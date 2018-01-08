@@ -39,9 +39,9 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
             switch (retorno)
             {
-                case -1: mensagemRetorno = "Pau 1"; break;
-                case -2: mensagemRetorno = "Pau 2"; break;
-                case -3: mensagemRetorno = "Pau 3"; break;
+                case -1: mensagemRetorno = "Erro ao cadastrar a venda"; break;
+                case -2: mensagemRetorno = "Erro ao cadastrar o endereço"; break;
+                case -3: mensagemRetorno = "Erro ao cadastrar o endereço de entrega"; break;
             }
 
             if (string.IsNullOrEmpty(mensagemRetorno))

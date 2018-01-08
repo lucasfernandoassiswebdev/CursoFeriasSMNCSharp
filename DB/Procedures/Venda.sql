@@ -101,9 +101,9 @@ CREATE PROCEDURE [dbo].[SP_InsVenda]
 		Data..........: 04/01/2017
 		Objetivo......: Cadastra uma nova venda
 		Parametro.....: @Entrega
-							S -- Os produtos da venda será entregue em um endereço.
-							N -- Os produtos da venda será retirado junto a compra.
-							C -- Os produtos da venda será entregue no endereço do cliente.
+							S -- Os produtos da venda serão entregues em um endereço já cadastrado.
+							N -- Os produtos da venda serão retirados junto a compra(no local).
+							C -- Os produtos da venda serão entregues no endereço do cliente.
 
 		Retornos......: -1 - Erro ao cadastrar a venda.
 						-2 - Erro ao cadastrar o endereço.
