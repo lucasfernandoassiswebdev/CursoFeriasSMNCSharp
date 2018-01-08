@@ -1,6 +1,7 @@
 ﻿@{ Layout = null;}
 
 <div id="modalCadastroDeVenda"></div>
+<div id="modalDeletaVenda"></div>
 
 <table class="striped responsive-table" id="gridVendas">
     <thead>
@@ -24,9 +25,10 @@
 
 <script>
 
-    $("#modalVenda").click(function() {
+    //Trazendo o grid de vendas
 
-        $.get('@Url.Action("Cadastrar")')
+    $("#modalVenda").click(function() {
+        $.get('@Url.Action("Cadastrar","Venda")')
             .done(function(data) {
                 $("#modalCadastroDeVenda").html(data);
                 $("#modalCadastraVenda").modal("open");

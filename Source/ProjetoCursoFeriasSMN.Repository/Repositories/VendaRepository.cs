@@ -14,24 +14,25 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public enum Procedures
         {
-            CadastraVenda,
+            SP_InsVenda,
             CadastraItensVenda,
-            DeletaVenda,
-            ListaVendas,
-            ListaVenda
+            SP_DelVenda,
+            SP_SelVendas,
+            SP_SelItensVenda,
+            SP_InsItensVenda,
         }
 
         public string CadastraVenda(Venda venda)
         {
             BeginTransaction();
-            ExecuteProcedure(Procedures.CadastraVenda);
+            ExecuteProcedure(Procedures.SP_InsVenda);
 
             AddParameter("@CodigoCliente", venda.CodigoCliente);
-            AddParameter("@CodigoEnderecoEspecifico", venda.CodigoEnderecoEspecifico);
-            AddParameter("@DataVenda", venda.DataVenda);
-            AddParameter("@Desconto", venda.Desconto);
             AddParameter("@SubTotal", venda.SubTotal);
             AddParameter("@Total", venda.Total);
+            AddParameter("@Desconto", venda.Desconto);
+            AddParameter("@DataVenda", venda.DataVenda);
+            
 
             var retorno = ExecuteNonQueryWithReturn();
             var mensagemRetorno = string.Empty;
@@ -61,31 +62,31 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
         public string CadastraItensVenda(IEnumerable<Produto> listaItens, int codigoVenda)
         {
             ExecuteProcedure(Procedures.CadastraItensVenda);
+            AddParameter("@CodigoVenda", codigoVenda);
 
             var mensagemRetorno = string.Empty;
-            //foreach (var item in listaItens)
-            //{
-            //    AddParameter("@CodigoVenda", item.CodigoVenda);
-            //    AddParameter("@CodigoProduto", item.CodigoProduto);
-            //    AddParameter("@Preco", item.Preco);
-            //    AddParameter("@QuantidadeVendida", item.QuantidadeVendida);
+            foreach (var item in listaItens)
+            {
+                AddParameter("@CodigoProduto", item.CodigoProduto);
+                AddParameter("@Preco", item.Preco);
+                //AddParameter("@QuantidadeVendida", item.QuantidadeVendida);
 
-            //    var retorno = ExecuteNonQueryWithReturn();
+                var retorno = ExecuteNonQueryWithReturn();
 
-            //    switch (retorno)
-            //    {
-            //        case 1: mensagemRetorno = "Pau 1"; break;
-            //        case 2: mensagemRetorno = "Pau 2"; break;
-            //        case 3: mensagemRetorno = "Pau 3"; break;
-            //    }
-            //}
+                switch (retorno)
+                {
+                    case 1: mensagemRetorno = "Pau 1"; break;
+                    case 2: mensagemRetorno = "Pau 2"; break;
+                    case 3: mensagemRetorno = "Pau 3"; break;
+                }
+            }
 
             return mensagemRetorno != string.Empty ? mensagemRetorno : null;
         }
 
         public string DeletaVenda(int idVenda)
         {
-            ExecuteProcedure(Procedures.DeletaVenda);
+            //ExecuteProcedure(Procedures.DeletaVenda);
             AddParameter("@idVenda", idVenda);
 
             var retorno = ExecuteNonQueryWithReturn();
@@ -103,7 +104,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public IEnumerable<Venda> ListaVendas(int codigoCliente)
         {
-            ExecuteProcedure(Procedures.ListaVendas);
+            //ExecuteProcedure(Procedures.ListaVendas);
             AddParameter("@codigoCliente", codigoCliente);
 
             var listaVendas = new List<Venda>();
@@ -131,7 +132,7 @@ namespace ProjetoCursoFeriasSMN.Repository.Repositories
 
         public Venda SelecionaVenda(int codigoVenda)
         {
-            ExecuteProcedure(Procedures.ListaVenda);
+            //ExecuteProcedure(Procedures.ListaVenda);
             AddParameter("@codigoVenda", codigoVenda);
 
             using (var reader = ExecuteReader())

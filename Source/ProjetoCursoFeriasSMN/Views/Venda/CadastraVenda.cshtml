@@ -8,7 +8,8 @@
             <div class="row">
                 <!--Selectlist de clientes-->
                 <div class="input-field col s4">
-                    @Html.DropDownList("listaClientes", Model.Clientes, "Cliente:")
+                    @Html.DropDownList("listaClientes", Model.Clientes, "Selecione")
+                    <label>Cliente</label>
                 </div>
                 <div class="input-field col s4">
                     <select id="listaProdutos">
@@ -18,10 +19,10 @@
                             <option value="@produto.CodigoProduto" data-Valor="@produto.Preco" data-Estoque="@produto.Estoque">@produto.Nome</option>
                         }
                     </select>
-                    <label>Produto:</label>
+                    <label>Produto</label>
                 </div>
                 <div class="input-field col s4">
-                    <label for="txtQuantidade">Quantidade:</label>
+                    <label for="txtQuantidade">Quantidade</label>
                     <input id="txtQuantidade" name="Nome" type="number">
                 </div>
             </div>
@@ -44,8 +45,9 @@
                 </table>
             </div>
             <!--opção de entrega-->
+            <h4>Engrega</h4>
             <div class="row">
-                <div class="input-field col s4">
+                <div class="input-field col s4" style="display: flex">
                     <input name="IndicadorEntrega" type="radio" id="opcEntrega" value="C" />
                     <label for="opcEntrega">Endereço do cliente</label>
 
@@ -74,9 +76,9 @@
         </form>
     </div>
     <div class="modal-footer">
-        <a class="modal-action modal-close waves-effect waves-light btn" href="#!" id="finalizaCompra">
+        <button type="submit" class="modal-action modal-close waves-effect waves-light btn">
             <i class="material-icons left">send</i>Cadastrar
-        </a>
+        </button>
     </div>
 </div>
 
@@ -119,10 +121,28 @@
                     $("<td>",
                         {
                             html: $("#txtQuantidade").val()
+                        }),
+                    $("<td>",
+                        {
+                            html: $("<a>",
+                                    {
+                                        "class": "btn-floating btn-large waves-effect waves-light red tooltipped",
+                                        "data-position": "bottom",
+                                        "data-delay": 50,
+                                        "data-tooltip": "Remover item",
+                                        html: [
+                                            $("<i>",
+                                                {
+                                                    "class": "material-icons",
+                                                    html: "delete"
+                                                })
+                                        ]
+                                    })
                         })
                 ]
             }));
         CalculaTotal();
+        $(".tooltipped").tooltip({ delay: 50 });
     });
 
     //Finalizando a compra
@@ -139,17 +159,24 @@
         });
 
         //Enviando o objeto venda ao controller
-        $.get('@Url.Action("CadastrarConfirma")',
+        $.get('@Url.Action("CadastrarConfirma","Venda")',
                 {
                     CodigoCliente: $("#listaClientes").val(),
-                    Desconto: $("#txtDesconto").val(),
-                    Subtotal: $("#txtTotalCompra").val(),
-
+                    Desconto: parseFloat($("#txtDesconto").val().replace(",", ".")),
+                    Subtotal: parseFloat($("#txtTotalCompra").val().replace(",", ".")),
                     Itens: listaItens
                 })
             .done(function (data) {
                 Materialize.toast(data);
                 $("#modalCadastraVenda").modal("close");
+                //Atualizando a tabela de vendas
+                $('@Url.Action("Listar","Venda")')
+                    .done(function (data) {
+                        $("#gridVendas tbody").html(data).slideDown("fast");
+                    })
+                    .error(function (xhr) {
+                        Materialize.toast(xhr.responseText);
+                    });
             })
             .fail(function (xhr) {
                 Materialize.toast(xhr.responseText, 5000);
@@ -166,7 +193,7 @@
             totalCalculado += valor * quantidade;
         });
         //Atualizando o total na tela e mascarando
-        $("#txtTotalCompra").val(totalCalculado).mask("#.##0,00", { reverse: true });;
+        $("#txtTotalCompra").val(totalCalculado).mask("#.##0,00", { reverse: true }).focus();
     }
 
 </script>
