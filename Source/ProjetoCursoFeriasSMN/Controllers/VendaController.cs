@@ -41,16 +41,6 @@ namespace ProjetoCursoFeriasSMN.Controllers
 
         public ActionResult CadastrarConfirma(Venda venda)
         {
-            if (venda.IndicadorEntrega == "C")
-            {
-                var responseCliente = _appCliente.GetCliente(venda.CodigoCliente);
-                if (responseCliente.Status != HttpStatusCode.OK)
-                    return Error("Erro ao encontrar endereço do cliente!");
-
-                venda.CodigoEnderecoEntrega = responseCliente.Content.CodigoEndereco;
-                venda.Complemento = responseCliente.Content.Complemento;
-            }
-
             var response = _appVenda.Post(venda);
             if (response.Status != HttpStatusCode.OK)
                 return Error(response.ContentAsString);
@@ -66,7 +56,7 @@ namespace ProjetoCursoFeriasSMN.Controllers
             if (response.Content == null)
                 return Error("Venda não encontrada");
 
-            var cliente = _appCliente.GetCliente(response.Content.CodigoCliente);
+            var cliente = _appCliente.GetCliente(response.Content.Cliente.CodigoCliente);
             if (cliente.Status != HttpStatusCode.OK)
                 return Error(cliente.ContentAsString);
             if (cliente.Content == null)

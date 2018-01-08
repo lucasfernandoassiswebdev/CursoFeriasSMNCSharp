@@ -79,6 +79,7 @@
 
                     $("#txtBairroCadastro, #txtLogradouroCadastro, #txtCidadeCadastro, #txtEstadoCadastro").trigger("focus").attr("readonly", "readonly");
                     $("#txtEstadoCadastro").attr("disabled", "disabled");
+                    $("#txtNumeroCadastro").focus();
                 })
                 .fail(function() {
                     Materialize.toast("Cep não encontrado", 5000);
@@ -92,6 +93,7 @@
     function HabilitaCampos() {
         $("#txtBairroCadastro, #txtLogradouroCadastro, #txtCidadeCadastro, #txtEstadoCadastro").trigger("focus").removeAttr("readonly");
         $("#txtEstadoCadastro").removeAttr("disabled");
+        $("#txtNumeroCadastro").focus();
     }
 
 </script>

@@ -1,5 +1,6 @@
 ﻿using ProjetoCursoFeriasSMN.Domain.Entidades;
 using ProjetoCursoFeriasSMN.Repository.Repositories;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 
@@ -14,6 +15,16 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         public IHttpActionResult Post(Venda venda)
         {
             var response = _vendaRepository.CadastraVenda(venda);
+
+            if (string.IsNullOrEmpty(response))
+                return Ok(response);
+
+            return Content(HttpStatusCode.BadRequest, response);
+        }
+
+        public IHttpActionResult PostItensVenda(IEnumerable<Produto> listaProdutos, int codigoVenda)
+        {
+            var response = _vendaRepository.CadastraItensVenda(listaProdutos, codigoVenda);
 
             if (string.IsNullOrEmpty(response))
                 return Ok(response);
@@ -41,7 +52,7 @@ namespace ProjetoCursoFeriasSMN.Web.Api.Controllers
         [HttpGet, Route("selecionaVenda/{codigoVenda}")]
         public IHttpActionResult GetVenda(int codigoVenda)
         {
-            return Ok(_vendaRepository.SelecionaVenda(codigoVenda));
+            return Ok(_vendaRepository.ListaItensVenda(codigoVenda));
         }
     }
 }

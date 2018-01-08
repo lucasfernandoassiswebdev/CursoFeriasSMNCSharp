@@ -126,8 +126,8 @@
     <Content Include="Lib\Images\smnwallpaper.png" />
     <Content Include="Lib\Javascript\jquery.mask.js" />
     <Content Include="Lib\Javascript\materialize.min.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Lib\Javascript\jquery.unobtrusive-ajax.js" />
+    <Content Include="Lib\Javascript\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

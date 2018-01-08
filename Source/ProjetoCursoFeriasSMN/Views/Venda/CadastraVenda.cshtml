@@ -74,7 +74,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="modal-action modal-close waves-effect waves-light btn">
+        <button type="submit" class="modal-action modal-close waves-effect waves-light btn" id="finalizaCompra">
             <i class="material-icons left">send</i>Cadastrar
         </button>
     </div>
@@ -155,21 +155,38 @@
 
         //Montando a lista de itens
         $("#tableProdutos tbody tr").each(function () {
-            var Produto = {
+            var produto = {
                 CodigoProduto: $(this).attr("data-Id"),
                 QuantidadeVendida: $(this).find("td:eq(2)").text()
             }
-            listaItens.push(Produto);
+
+            listaItens.push(produto);
         });
 
+        var endereco = {
+            Cep: $("#txtCepCadastro").val(),
+            Logradouro: $("#txtLogradouroCadastro").val(),
+            Bairro: $("#txtBairroCadastro").val(),
+            Cidade: $("#txtCidadeCadastro").val(),
+            Estado: $("#txtEstadoCadastro").val()
+        }
+
+        var cliente = {
+            CodigoCliente: $("#listaClientes").val(),
+            Numero: $("#txtNumeroCadastro").val(),
+            Complemento: $("#txtComplementoCadastro").val()
+        }
+
         //Enviando o objeto venda ao controller
-        $.get('@Url.Action("CadastrarConfirma","Venda")',
-                {
-                    CodigoCliente: $("#listaClientes").val(),
-                    Desconto: parseFloat($("#txtDesconto").val().replace(",", ".")),
-                    Subtotal: parseFloat($("#txtTotalCompra").val().replace(",", ".")),
-                    Itens: listaItens
-                })
+        $.post('@Url.Action("CadastrarConfirma","Venda")',
+    {
+        Cliente: cliente,
+        Endereco: endereco,
+        Desconto: parseFloat($("#txtDesconto").val().replace(",", ".")),
+        Subtotal: parseFloat($("#txtTotalCompra").val().replace(",", ".")),
+        Itens: listaItens,
+        IndicadorEntrega: $("input[name=IndicadorEntrega]:checked").val()
+    })
             .done(function (data) {
                 Materialize.toast(data);
                 $("#modalCadastraVenda").modal("close");
